@@ -196,7 +196,7 @@ input[type="submit"]{
     border-radius: 8px;
     color: #eee;
     position: absolute;
-    bottom: 50px;
+    bottom: 20px;
     left: 30%; right: 30%;
     transition: all ease.7s;
 }
