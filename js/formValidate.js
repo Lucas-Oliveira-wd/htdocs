@@ -124,3 +124,4 @@ var $selArr = []; //Array que vai conter as opcoes para o select
             $selCod.innerHTML = '<option name="default">Selecione um Setor para ver os códigos disponíveis</option>'
         };
 };
+
