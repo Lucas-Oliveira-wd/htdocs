@@ -1,10 +1,3 @@
-<?php
-        /* Reoder options in alphabetical */
-        //criando o array com as opcoes
-        $opt = array("Serviços Financeiros Diversos","Diversos","Bancos","Construção Civil","Energia Elétrica","Petróleo, Gás e Biocombustíveis","Tecidos, Vestuário e Calçados","Máquinas e Equipamentos","Químicos","Siderurgia e Metalurgia","Exploração de Imóveis","Madeira e Papel","Outros","Construção e Engenharia");
-        //criando um array ordenado
-        sort($opt);
-        ?>
 
 <?php
         //define variables and set to empty values
@@ -135,7 +128,7 @@
             return $data;
         }
     ?>
-<div class ='none' style = 'display:  none'>    
+  
 <?php
 $username = "lucas";
 $servername = "localhost";

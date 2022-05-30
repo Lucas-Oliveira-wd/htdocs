@@ -1,0 +1,20 @@
+#secForm{
+    background-color: #fff;
+}
+.stTitle{
+    text-align: center;
+}
+
+/* show span  */
+.showSpansetor #setor+span, .showSpancod #cod+span,
+.showSpanempName #empName+span, .showSpanultBal #ultBal+span,
+.showSpancot #cot+span, .showSpanroic #roic+span,
+.showSpancresres #cresres+span, .showSpandYield #dYield+span,
+.showSpannAcoes #nAcoes+span, .showSpandivB #divB+span,
+.showSpandisp #disp+span, .showSpanativC #ativC+span,
+.showSpanativ #ativ+span, .showSpanpatLiq #patLiq+span,
+.showSpanrecL12 #recL12+span, .showSpanebit12 #ebit12+span,
+.showSpanlucLiq12 #lucLiq12+span, .showSpanrecL3 #recL3+span{
+    display: inline;
+}
+

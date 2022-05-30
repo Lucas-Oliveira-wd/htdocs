@@ -1,127 +1,120 @@
-// Global variables
-const $body = document.querySelector('body');
-
-
-// forming the select to codigo da acao
-//creating the arrays
-
-$servFinDir = ['GPIV33']; 
-$dir = ['RENT3'];
-$banc = ['ITSA4'];
-$constCivil = ['CYRE3'];
-$eneElet = ['TRPL4','CLSC4'];
-$petGasBioc = ['ENAT3','PETR4'];
-$tecVestCalc = ['CTSA4'];
-$maqEq = ['MTSA4','KEPL3','WEGE3'];
-$quim = ['CRPG6','BRKM6'];
-$sidMet = ['CSNA3','TKNO4','PATI3','GOAU3','USIM5'];
-$expPet = ['HBTS5','BRML3']
-$madPap = ['EUCA4'];
-$outros = ['ATOM3'];
-$consEng = ['SOND5'];
-
-/*!ATENCAO esses são todos os setores possiveis para empresas ja registradas.
-Caso seja nescessario cadastrar uma empresa que não tenha o setor nesse script, será nescessário criar um novo array.
-Para cada empresa que tiver o setor, basta acrescentar o codigo da empresa no array do setor correspondente! */
-
-$cod = [$servFinDir,$dir,$banc,$constCivil,$eneElet,$petGasBioc,$tecVestCalc,$maqEq,$quim,$sidMet,$expPet,$madPap,$outros,$consEng]
-
-const $selCod = document.querySelector('#cod');
-
-/*!Atencão: Trazendo o array do php*/
-$opt = ["Serviços Financeiros Diversos","Diversos","Bancos","Construção Civil","Energia Elétrica","Petróleo, Gás e Biocombustíveis","Tecidos, Vestuário e Calçados","Máquinas e Equipamentos","Químicos","Siderurgia e Metalurgia","Exploração de Imóveis","Madeira e Papel","Outros","Construção e Engenharia"];
-
-function writeCod (e){
-var $selArr = []; //Array que vai conter as opcoes para o select
-    switch (e.value){
-        case $opt[0]:
-            for (i=0;i<$servFinDir.length;i++){
-                $selArr[i] = "<option name ='"+$servFinDir[i]+"'>"+$servFinDir[i]+"</option>";
-                $selCod.innerHTML = $selArr;
-            };
-            break;
-        case $opt[1]:
-            for (i=0;i<$dir.length;i++){
-                $selArr[i] = "<option name ='"+$dir[i]+"'>"+$dir[i]+"</option>"
-                $selCod.innerHTML = $selArr;
-            };
-            break;
-        case $opt[2]:
-            for (i=0;i<$banc.length;i++){
-                $selArr[i] = "<option name ='"+$banc[i]+"'>"+$banc[i]+"</option>"
-                $selCod.innerHTML = $selArr;
-            };
-            break;
-        case $opt[3]:
-            for (i=0;i<$constCivil.length;i++){
-                $selArr[i] = "<option name ='"+$constCivil[i]+"'>"+$constCivil[i]+"</option>"
-                $selCod.innerHTML = $selArr;
-            };
-            break;
-        case $opt[4]:
-            for (i=0;i<$eneElet.length;i++){
-                $selArr[i] = "<option name ='"+$eneElet[i]+"'>"+$eneElet[i]+"</option>"
-                $selCod.innerHTML = $selArr;
-            };
-            break;
-        case $opt[5]:
-            for (i=0;i<$petGasBioc.length;i++){
-                $selArr[i] = "<option name ='"+$petGasBioc[i]+"'>"+$petGasBioc[i]+"</option>"
-                $selCod.innerHTML = $selArr;
-            };
-            break;
-        case $opt[6]:
-            for (i=0;i<$tecVestCalc.length;i++){
-                $selArr[i] = "<option name ='"+$tecVestCalc[i]+"'>"+$tecVestCalc[i]+"</option>"
-                $selCod.innerHTML = $selArr;
-            };
-            break;
-        case $opt[7]:
-            for (i=0;i<$maqEq.length;i++){
-                $selArr[i] = "<option name ='"+$maqEq[i]+"'>"+$maqEq[i]+"</option>"
-                $selCod.innerHTML = $selArr;
-            };
-            break;
-        case $opt[8]:
-            for (i=0;i<$quim.length;i++){
-                $selArr[i] = "<option name ='"+$quim[i]+"'>"+$quim[i]+"</option>"
-                $selCod.innerHTML = $selArr;
-            };
-            break;
-        case $opt[9]:
-            for (i=0;i<$sidMet.length;i++){
-                $selArr[i] = "<option name ='"+$sidMet[i]+"'>"+$sidMet[i]+"</option>"
-                $selCod.innerHTML = $selArr;
-            };
-            break; 
-        case $opt[10]:
-            for (i=0;i<$expPet.length;i++){
-                $selArr[i] = "<option name ='"+$expPet[i]+"'>"+$expPet[i]+"</option>"
-                $selCod.innerHTML = $selArr;
-            };
-            break; 
-        case $opt[11]:
-            for (i=0;i<$madPap.length;i++){
-                $selArr[i] = "<option name ='"+$madPap[i]+"'>"+$madPap[i]+"</option>"
-                $selCod.innerHTML = $selArr;
-            };
-            break;
-        
-        case $opt[12]:
-            for (i=0;i<$outros.length;i++){
-                $selArr[i] = "<option name ='"+$outros[i]+"'>"+$outros[i]+"</option>"
-                $selCod.innerHTML = $selArr;
-            };
-            break;
-            
-        case $opt[13]:
-            for (i=0;i<$consEng.length;i++){
-                $selArr[i] = "<option name ='"+$consEng[i]+"'>"+$consEng[i]+"</option>"
-                $selCod.innerHTML = $selArr;
-            };
-            break;
-        default:
-            $selCod.innerHTML = '<option name="default">Selecione um Setor para ver os códigos disponíveis</option>'
-        };
+function checkEmpty(e){
+    if (e.value == ''){
+        $body.classList.add('showSpan'+e.id);
+    } else {
+        $body.classList.remove('showSpan'+e.id)
+    }
 };
 
+function sc (e){
+    console.log(e.charCodeAt(0))
+};
+// funcao para permitir Apenas Letras
+// !IMPORTANTE: usar o evento keypressup para chamar essa funcao
+function justLetters (e){
+    let val = e.value;
+    let arr = ['']; //array para conter os caracteres
+    for (i=0;i<val.length;i++) {
+        let codI = val.charCodeAt(i);
+        if(codI >= 65 && codI <= 122 || codI === 32/*(charCode do espaco)*/){
+        arr[i] = val[i];  
+        }
+    };
+    let nval = ''; //nova variavel com so com letras
+    for(i=0;i<arr.length;i++){
+        nval = nval.concat('',arr[i]);
+    }
+    e.value = nval; // substituindo o valor do input
+};
+
+
+//Funcao para permitir apenas numeros
+// !IMPORTANTE: usar o evento keypressup para chamar essa funcao
+function justNumbers (e){
+    let val = e.value;
+    let arr = ['']; //array para conter os caracteres
+    for (i=0;i<val.length;i++) {
+        let codI = val.charCodeAt(i);
+        if(codI>=48&&codI<=57){
+        arr[i] = val[i];  
+        }
+    };
+    let nval = ''; //nova variavel com so com letras
+    for(i=0;i<arr.length;i++){
+        nval = nval.concat('',arr[i]);
+    }
+    e.value = nval; // substituindo o valor do input
+};
+
+//Funcao para permitir apenas numeros com formato em real
+// !IMPORTANTE: usar o evento keypressup para chamar essa funcao
+function justNumbersReal (e){
+    let val = e.value;
+    let arr = ['']; //array para conter os caracteres
+    for (i=0;i<val.length;i++) {
+        let codI = val.charCodeAt(i);
+        if(codI>=48&&codI<=57||codI==44||codI==82||codI==36/*charCode de (',','R','$')*/){
+        arr[i] = val[i];  
+        }
+    };
+    let nval = ''; //nova variavel com so com letras
+    for(i=0;i<arr.length;i++){
+        nval = nval.concat('',arr[i]);
+    }
+    e.value = nval; // substituindo o valor do input
+};
+
+//Funcao para tranformar numeros para o formato da moeda real
+function toReal(e){
+    let val = '';
+    let dec = '';
+    let real = '';
+    for(i=0;i<e.value.length;i++){
+        let char = e.value.charAt(i);
+        if(char!==','&&char!=='R'&&char!=='$'){
+            val = val.concat('',e.value[i]);
+        }
+    }
+    dec = val.slice(val.length-2);
+    real = val.slice(0,val.length-2);
+    e.value = 'R$'+real+','+dec;
+    if(val!==''&&dec!==''&&real!==''){
+    }
+    
+};
+
+//Funcao para tranformar numeros para o formato de porcentagem
+function toPercent(e){
+    let val = '';
+    let dec = '';
+    let befVirg = '';
+    for(i=0;i<e.value.length;i++){
+        let char = e.value.charAt(i);
+        if(char!==','&&char!=='%'){
+            val = val.concat('',e.value[i]);
+        }
+        console.log("val: "+val);
+    }
+    dec = val.slice(val.length-2);
+    console.log('dec: '+dec);
+    befVirg = val.slice(0,val.length-2);
+    console.log("befVirg: "+befVirg);
+    e.value = befVirg+','+dec+'%';
+}
+//Funcao para permitir apenas numeros com formato de porcentagem
+// !IMPORTANTE: usar o evento keypressup para chamar essa funcao
+function justNumbersPerc (e){
+    let val = e.value;
+    let arr = ['']; //array para conter os caracteres
+    for (i=0;i<val.length;i++) {
+        let codI = val.charCodeAt(i);
+        if(codI>=48&&codI<=57||codI==44||codI==37/*charCode de (',','%')*/){
+        arr[i] = val[i];  
+        }
+    };
+    let nval = ''; //nova variavel com so com letras
+    for(i=0;i<arr.length;i++){
+        nval = nval.concat('',arr[i]);
+    }
+    e.value = nval; // substituindo o valor do input
+};

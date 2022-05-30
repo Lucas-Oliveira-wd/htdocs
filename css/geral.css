@@ -18,6 +18,7 @@ body{
     --font-primary: Montserrat, sans-serif;
     --font-secundary: Roboto, sans-serif;
     --font-action: Lato, sans-serif;
+    --font-shorthand-input:normal normal 700 1rem/1.2rem var(--font-action);
     --color-primary-1:rgba(0, 0, 30, 0.1);
     --color-primary-2:rgba(0, 0, 30, 0.2);
     --color-primary-3:rgba(0, 0, 30, 0.3);
@@ -89,6 +90,10 @@ button:hover{
     box-shadow: .12rem .25rem 8px #00000055;
     transform: scaleY(1.04) scaleX(1.005);
 }
+span{
+    display: none;
+    color: red;
+}
 p{
     padding: .5rem;
     font: normal normal 400 1rem/1.5rem var(--font-primary);
@@ -138,12 +143,12 @@ fieldset{
 }
 select{  
     padding: .4rem 2.5rem .4rem .5rem;
-    border:none;
-    border-bottom: var(--color-primary) solid 2px;;
-    font: normal normal 300 1.4rem/2rem var(--font-secundary);
+    border: 2px solid var(--color-primary);
+    font: var(--font-shorthand-input);
     border-radius: 5px;
-    min-width: 50rem;
     text-align: center;
+    min-width: 30rem;
+    max-width: 50rem;
 }
 textarea{
     padding: .4rem .5rem;
@@ -153,43 +158,38 @@ textarea{
     min-height: 100px; max-height: 300px;
 }
 .formItem{
-    margin: 10px 50px 150px 50px;
+    margin: 10px 0 60px;
     padding: 0 20px;
-    background-color: #00007d;
 }
 
 label{
     font: normal normal 400 1.4rem/2rem var(--font-secundary);
     color: var(--color-primary);
-    background-color: #470e1b;
 }
 input:focus{
     border: 2px solid var(--color-secundary);
 }
 input{
     padding: .4rem .5rem;
-    border:none;
-    border-bottom: var(--color-primary) solid 2px;
-    font:normal normal 300 1rem/1.2rem var(--font-action);
+    border: solid 2px var(--color-primary);
+    font:normal normal 700 1rem/1.2rem var(--font-action);
     min-width: 30rem;
+    color: var(--color-primary);
 }
-.form-line .form-item{
+.form-line .formItem{
     display: inline-block;
 }
-.form-line .form-item:nth-child(2){
+.form-line .formItem:nth-child(2){
     margin-left: 30px;
 }
-#page-1 form fieldset:nth-child(1) div:nth-child(4){
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+input[type='date']{
+    color: var(--color-primary);
 }
-
 input[type="submit"]{
     background: #ED213A;
     background: -webkit-linear-gradient(to top, #93291E, #ED213A);
     background: linear-gradient(to top, #93291E, #ED213A);
-    font: normal normal 400 1.2rem/1.5rem var(--font-action);
+    font: var(--font-shorthand-input);
     text-transform: uppercase;
     padding: .5rem 1.5rem;
     border-radius: 8px;
@@ -198,11 +198,9 @@ input[type="submit"]{
     bottom: 20px;
     left: 30%; right: 30%;
     transition: all ease.7s;
+    border: none;
 }
 input[type="submit"]:hover{
     transform: scale(1.02);
     cursor: pointer;
-}
-.stTitle{
-    text-align: center;
 }
