@@ -5,6 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastrar ou Atualizar dados</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
     <link type="text/css" rel="stylesheet" href="css/geral.css"/>
     <link type="text/css" rel="stylesheet" href="css/formUp.css"/>
 </head>
@@ -63,63 +67,63 @@
         
         <!--    Dividend Yield   -->
         <div class="formItem">
-            <input placeholder="Dividend Yield" onblur='checkEmpty(this)' name='dYield' id='dYield' type="text">
+            <input placeholder="Dividend Yield" onblur='checkEmpty(this)' onkeyup="justNumbersPerc(this);toPercent(this)" name='dYield' id='dYield' type="text">
             <span class='spanCampEmpty'>*Campo vazio!</span>
         </div>
         
         <!--    Numero de acoes   -->
         <div class="formItem">
-            <input placeholder="Número de Acões" onblur='checkEmpty(this)' name="nAcoes" id="nAcoes" type="text">
+            <input placeholder="Número de Acões" onblur='checkEmpty(this)' onkeyup="justNumbers(this)" name="nAcoes" id="nAcoes" type="text">
             <span class='spanCampEmpty'>*Campo vazio!</span>
         </div>
         
         <!--    Divida Bruta   -->
         <div class="formItem">
-            <input placeholder="Dívida Bruta" onblur='checkEmpty(this)' name="divB" id="divB" type="text">
+            <input placeholder="Dívida Bruta" onblur='checkEmpty(this)'  onkeyup="justNumbers(this)"  name="divB" id="divB" type="text">
             <span class='spanCampEmpty'>*Campo vazio!</span>
         </div>
         
         <!--    Disponibilidades   -->
         <div class="formItem">
-            <input placeholder="Disponibilidades" onblur='checkEmpty(this)' name="disp" id="disp" type="text">
+            <input placeholder="Disponibilidades" onblur='checkEmpty(this)'   onkeyup="justNumbers(this)"  name="disp" id="disp" type="text">
             <span class='spanCampEmpty'>*Campo vazio!</span>
         </div>
         
         <!--    Ativos Circulantes  -->
         <div class="formItem">
-            <input placeholder="Ativos Circulantes" onblur='checkEmpty(this)' name="ativC" id="ativC" type="text">
+            <input placeholder="Ativos Circulantes" onblur='checkEmpty(this)'   onkeyup="justNumbers(this)"  name="ativC" id="ativC" type="text">
             <span class='spanCampEmpty'>*Campo vazio!</span>
         </div>
         
         <!--    Ativos   -->
         <div class="formItem">
-            <input placeholder="Ativos" onblur='checkEmpty(this)' name="ativ" id="ativ" type="text">
+            <input placeholder="Ativos" onblur='checkEmpty(this)'   onkeyup="justNumbers(this)"  name="ativ" id="ativ" type="text">
             <span class='spanCampEmpty'>*Campo vazio!</span>
         </div>
         
         <!--    Patrimonio Líquido   -->
         <div class="formItem">
-            <input placeholder="Patrimonio Líquido" onblur='checkEmpty(this)' name="patLiq" id="patLiq" type="text"><span class='spanCampEmpty'>*Campo vazio!</span>
+            <input placeholder="Patrimonio Líquido" onblur='checkEmpty(this)'   onkeyup="justNumbers(this)"  name="patLiq" id="patLiq" type="text"><span class='spanCampEmpty'>*Campo vazio!</span>
         </div>
         
         <!--    Receita Liquida 12 meses   -->
         <div class="formItem">
-            <input placeholder="Receita Líquida (12 meses)" onblur='checkEmpty(this)' name="recL12" id="recL12" type="text"><span class='spanCampEmpty'>*Campo vazio!</span>
+            <input placeholder="Receita Líquida (12 meses)"   onkeyup="justNumbers(this)"  onblur='checkEmpty(this)' name="recL12" id="recL12" type="text"><span class='spanCampEmpty'>*Campo vazio!</span>
         </div>
         
         <!--    EEBIT 12 meses   -->
         <div class="formItem">
-            <input placeholder="Ebit (12 meses)" onblur='checkEmpty(this)' name="ebit12" id="ebit12" type="text"><span class='spanCampEmpty'>*Campo vazio!</span>
+            <input placeholder="Ebit (12 meses)" onblur='checkEmpty(this)'   onkeyup="justNumbers(this)"  name="ebit12" id="ebit12" type="text"><span class='spanCampEmpty'>*Campo vazio!</span>
         </div>
         
         <!--    Lucro Liquido 12 meses   -->
         <div class="formItem">
-            <input placeholder="Lucro Líquido (12 meses)" onblur='checkEmpty(this)' name="lucLiq12" id="lucLiq12" type="text"><span class='spanCampEmpty'>*Campo vazio!</span>
+            <input placeholder="Lucro Líquido (12 meses)" onblur='checkEmpty(this)'  onkeyup="justNumbers(this)"   name="lucLiq12" id="lucLiq12" type="text"><span class='spanCampEmpty'>*Campo vazio!</span>
         </div>
         
         <!--    receita Liquida   -->
         <div class="formItem">
-            <input placeholder="Receita Líquida (3 meses)" onblur='checkEmpty(this)' name="recL3" id="recL3" type="text"><span class='spanCampEmpty'>*Campo vazio!</span>
+            <input placeholder="Receita Líquida (3 meses)" onblur='checkEmpty(this)'  onkeyup="justNumbers(this)"   name="recL3" id="recL3" type="text"><span class='spanCampEmpty'>*Campo vazio!</span>
         <input type='submit' value="Enviar">
     </form>
 </div>

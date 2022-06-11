@@ -39,9 +39,11 @@ function justNumbers (e){
         arr[i] = val[i];  
         }
     };
-    let nval = ''; //nova variavel com so com letras
+    let nval = ''; //nova variavel com so com números
     for(i=0;i<arr.length;i++){
-        nval = nval.concat('',arr[i]);
+        if(arr[i] != undefined){  // retirando os undifineds
+           nval = nval.concat('',arr[i]); 
+        }
     }
     e.value = nval; // substituindo o valor do input
 };
@@ -95,9 +97,9 @@ function toPercent(e){
         }
         console.log("val: "+val);
     }
-    dec = val.slice(val.length-2);
+    dec = val.slice(val.length-1);
     console.log('dec: '+dec);
-    befVirg = val.slice(0,val.length-2);
+    befVirg = val.slice(0,val.length-1);
     console.log("befVirg: "+befVirg);
     e.value = befVirg+','+dec+'%';
 }

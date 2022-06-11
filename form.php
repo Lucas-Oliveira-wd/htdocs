@@ -131,12 +131,12 @@
   
 <?php
 $username = "lucas";
-$servername = "localhost";
-$password = NULL;
+$servername = "%";
+$password = '68,95,99.7';
 $dbname = "fundamentus";
 
 // Create connection
-$conn = new mysqli($servername, $username, FALSE, $dbname);
+$conn = new mysqli($servername, $username, $password, $dbname);
 
 // Check connection
 if ($conn->connect_error) {
