@@ -1,10 +1,37 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar ou Atualizar dados</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link type="text/css" rel="stylesheet" href="css/geral.css"/>
+    <link type="text/css" rel="stylesheet" href="css/formUp.css"/>
+</head>
+<body onload="writeCod (document.querySelector('#setor'))">
 <?php
+
+        #Function to filter date (segurity)
+        function filterData($data){
+            $data = trim($data);
+            $data = stripslashes($data);
+            $data = htmlspecialchars($data);
+            return $data;
+        }
+
+
         //define variables and set to empty values
-        $setor = $cod = $empName = $ultBal = $cotAtual = $roic = $cresres = $divYield = $numAcoes = $divBruta = $disp = $ativCirc = $ativos = $patLiq = $recLiq12 = $ebit12 = $lucLiq12 = $recLiq3 = '';
+        $setor = $cod = $empName = $ultBal = $cotAtual = $roic = $cresres = $divYield = $numAcoes = $divBruta = $disp =
+        $ativCirc = $ativos = $patLiq = $recLiq12 = $ebit12 = $lucLiq12 = $recLiq3 = '';
 
         # setting to empty the error variables
-        $setorErr = $codErr = $empNameErr = $ultBalErr = $cotAtualErr = $roicErr = $cresresErr = $divYieldErr = $numAcoesErr = $divBrutaErr = $dispErr = $ativCircErr = $ativosErr = $patLiqErr = $recLiq12Err = $ebit12Err = $lucLiq12Err = $recLiq3Err = '';
+        $setorErr = $codErr = $empNameErr = $ultBalErr = $cotAtualErr = $roicErr = $cresresErr = $divYieldErr =
+        $numAcoesErr = $divBrutaErr = $dispErr = $ativCircErr = $ativosErr = $patLiqErr = $recLiq12Err = $ebit12Err =
+        $lucLiq12Err = $recLiq3Err = '';
 
         # Colleting data to the variables
         if ($_SERVER['REQUEST_METHOD'] == "POST"){
@@ -36,25 +63,27 @@
             if (empty($_POST['cot'])) {
                 $cotAtualErr = "Informe o preco da acao atual";
             } else {
-                $cotAtual = filterData($_POST['cot']);
+                $cotAtual = tofloat(filterData($_POST['cot']));
+                $cotAtual = (double)filter_var($cotAtual, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
             };
 
             if (empty($_POST['roic'])) {
                 $roicErr = "Informe o ROIC da empresa!";
             } else {
-                $roic = filterData($_POST['roic']);
+                $roic = tofloat(filterData($_POST['roic']));
             };
 
             if (empty($_POST['cresres'])) {
                 $cresresErr = "Informe o crescimento da Receita da empres nos últimos 5 anos";
             } else {
-                $cresres = filterData($_POST['cresres']);
+                $cresres = tofloat(filterData($_POST['cresres']));
             };
 
             if (empty($_POST['dYield'])) {
                 $divYieldErr = "Informe o dividend yield";
             } else {
-                $divYield = filterData($_POST['dYield']);
+                $divYield = tofloat(filterData($_POST['dYield']));
+                $divYield = (double)filter_var($divYield, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
             };
 
             if (empty($_POST['nAcoes'])) {
@@ -120,39 +149,63 @@
             
         }
 
-        #Function to filter date (segurity)
-        function filterData($data){
-            $data = trim($data);
-            $data = stripslashes($data);
-            $data = htmlspecialchars($data);
-            return $data;
+        #function to transforme decimal to float (substitute "," to ".")
+        function tofloat($num) {
+            $dotPos = strrpos($num, '.');
+            $commaPos = strrpos($num, ',');
+            $percPos = strrpos($num, '%');
+            $realSingPos = strrpos($num, 'R$');
+            $sep = (($dotPos > $commaPos) && $dotPos) ? $dotPos :
+                ((($commaPos > $dotPos) && $commaPos) ? $commaPos : false);
+          
+            if (!$sep) {
+                return floatval(preg_replace("/[^0-9]/", "", $num));
+            }
+        
+            return floatval(
+                preg_replace("/[^0-9]/", "", substr($num, 0, $sep)) . '.' .
+                preg_replace("/[^0-9]/", "", substr($num, $sep+1, strlen($num)))
+            );
         }
+
     ?>
   
 <?php
-$username = "lucas";
-$servername = "%";
-$password = '68,95,99.7';
-$dbname = "fundamentus";
+$username = "root";
+$servername = "localhost";
+$password = NULL;
+$dbname = "invest";
 
 // Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = mysqli_connect($servername, $username, $password, $dbname);
 
 // Check connection
 if ($conn->connect_error) {
-  die("Connection failed: " . $conn->connect_error);
-}else{
-echo "<script>alert(Conexão com o banco de dados foi bem sucedida!)</script>";
-};
+    die("Connection failed: " . $conn->connect_error);
+  }
 
-$sql = "INSERT INTO a_03_2022 (setor,codigo,empName,datUltBal,cot,roic,cresRec5a,divYield,numAcoes,divB,disp,ativCirc,arivos,patLiq,recLiq12,ebit12,lucLiq12,recLiq3)
-VALUES ($setor,$cod,$empName,$ultBal,$cot,$roic,$cresres,$dYield,$nAcoes,$divB,$disp,$ativC,$ativ,$patLiq,$recL12,$ebit12,$lucLiq12,$recL3)";
+$sql = "INSERT INTO a_03_2022 (
+    setor,codigo,empName,datUltBal,cotAtual,roic,cresRec5a,divYield,numAcoes,divB,disp,ativCirc,arivos,patLiq,recLiq12,
+    ebit12,lucLiq12,recLiq3
+    )
+VALUES (
+    $setor,$cod,$empName,$ultBal,$cotAtual,$roic,$cresres,$divYield,$numAcoes,$divBruta,$disp,$ativCirc,$ativos,$patLiq,$recLiq12,
+    $ebit12,$lucLiq12,$recLiq3
+    );";
+echo 'os inputs são:'.$setor.' '.$cod.' '.$empName.' '.$ultBal.' '.$cotAtual.' '.$roic.' '.$cresres.' '.$divYield.' '.$numAcoes.' '.$divBruta.' '.$disp.' '.$ativCirc.' '.$ativos.' 
+'.$patLiq.' '.$recLiq12.' '.$ebit12.' '.$lucLiq12.' '.$recLiq3;
 
-if ($conn->query($sql) === TRUE) {
+
+if (mysqli_query($conn, $sql)) {
     echo "New record created successfully";
   } else {
-    echo "Error: " . $sql . "<br>" . $conn->error;
+    echo "Error: " . $sql . "<br>" . mysqli_error($conn);
   }
   
-  $conn->close();
+  mysqli_close($conn);
 ?>
+<script src = "js/formValidate.js"></script>
+<script src = "js/selectConstruction.js"></script>
+
+</body>
+</html>
