@@ -1,5 +1,10 @@
 #secForm{
     background-color: #fff;
+    margin-top: 40px;
+}
+#secForm .container{
+    position: relative;
+    background-color: aqua;
 }
 .stTitle{
     text-align: center;
@@ -17,4 +22,15 @@
 .showSpanlucLiq12 #lucLiq12+span, .showSpanrecL3 #recL3+span{
     display: inline;
 }
+form[name='up']{
+    max-width: fit-content;
+}
 
+#secForm .inform{
+    background-color: forestgreen;
+    position: absolute;
+    right: 0%;
+    top: 10%;
+    left: 30%;
+    bottom: 0;
+}

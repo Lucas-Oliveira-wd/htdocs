@@ -11,19 +11,41 @@
     <link rel="manifest" href="/site.webmanifest">
     <link type="text/css" rel="stylesheet" href="css/geral.css"/>
     <link type="text/css" rel="stylesheet" href="css/formUp.css"/>
+    <link type="text/css" rel="stylesheet" href="css/header.css"/>
 </head>
 <body onload="writeCod (document.querySelector('#setor'))">
-
+    <header>
+        <div class="container">
+            <nav>
+                <ul class="main-menu">
+                    <li class="menu-item">
+                        <a href="index.html">Cadastrar Empresa</a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="">Lorem, ipsum.</a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="">Lorem, ipsum.</a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="">Lorem, ipsum.</a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="">Lorem, ipsum.</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
 <section id = "secForm">
 <div class="container">
     <h1 class = "stTitle">Upload de dados</h1>
     <form action="form.php" method='post' name="up">
-        <div class="form-line">
-            
+     
         <div class="formItem">
             <label for="setor">Setor</label><br>
-            <select aria-placeholder='Setor' onblur="checkEmpty(this)" onchange="writeCod(this);" name="setor" id="setor">
+            <select aria-placeholder='Setor' onblur="checkEmpty(this)" onchange="writeCod(this);wrtEmpName(this);" name="setor" id="setor">
                 <!-- os options vao ser escritos em js -->
             </select>
             <span class='spanCampEmpty'>*Campo vazio!</span>
@@ -35,101 +57,123 @@
             </select>
             <span class='spanCampEmpty'>*Campo vazio!</span>
         </div>
-        </div>
-
-        <div class="formItem">
-            <input onblur='checkEmpty(this)' onkeyup="justLetters(this)" placeholder="Nome da Empresa" name="empName" id="empName" type="text">
-            <span class='spanCampEmpty'>*Campo vazio!</span>
-        </div>
-        <div class="formItem">
-            <label for="ultBal">Data do Último Balanco Processado</label><br>
-            <input onblur='checkEmpty(this)' placeholder="Último Balanco Processado" name="ultBal" id="ultBal" type="date">
-            <span class='spanCampEmpty'>*Campo vazio!</span>
-        </div>
 
         <!--    Cotacão atual   -->
-        <div class="formItem">
-            <input placeholder="Cotacão Atual" onkeyup="justNumbersReal (this);toReal(this)" onblur='checkEmpty(this)' name="cot" id="cot" type="text">
+        <div class="formItem"Cotacão Atual>
+            <label for="cot">Cotacão Atual</label><br>
+            <input onkeyup="justNumbersReal (this);toReal(this)" onblur='checkEmpty(this)' name="cot" id="cot" type="text">
             <span class='spanCampEmpty'>*Campo vazio!</span>
         </div>
-        
-        <!--    ROIC   -->
+
         <div class="formItem">
-            <input placeholder="ROIC" onkeyup="justNumbersPerc(this);toPercent(this)" onblur='checkEmpty(this)' name='roic' id='roic' type="text">
+            <label for="empName">Nome da Empresa</label><br>
+            <input onblur='checkEmpty(this)' name="empName" id="empName" type="text">
             <span class='spanCampEmpty'>*Campo vazio!</span>
         </div>
-        
-        <!--    Crescimento da Receita   -->
+
         <div class="formItem">
-            <input placeholder="Crescimento da Receita (5 anos)" onblur='checkEmpty(this)' name='cresres' id='cresres' type="text">
-            <span class='spanCampEmpty'>*Campo vazio!</span>
-        </div>
-        
-        <!--    Dividend Yield   -->
-        <div class="formItem">
-            <input placeholder="Dividend Yield" onblur='checkEmpty(this)' onkeyup="justNumbersPerc(this);toPercent(this)" name='dYield' id='dYield' type="text">
+            <label for="ultBal">Data do Último Balanco Processado</label><br>
+            <select onblur='checkEmpty(this)' name="ultBal" id="ultBal">
+            <option selected value="2022-03-31">31/03/2022</option>
+            <option value="2022-06-31">31/06/2022</option>
+            </select>
             <span class='spanCampEmpty'>*Campo vazio!</span>
         </div>
         
         <!--    Numero de acoes   -->
         <div class="formItem">
-            <input placeholder="Número de Acões" onblur='checkEmpty(this)' onkeyup="justNumbers(this)" name="nAcoes" id="nAcoes" type="text">
+            <label for="nAcoes">Número de Acões</label><br>
+            <input onblur='checkEmpty(this)' onkeyup="justNumbers(this)" name="nAcoes" id="nAcoes" type="text">
+            <span class='spanCampEmpty'>*Campo vazio!</span>
+        </div>
+        
+        <!--    ROIC   -->
+        <div class="formItem">
+            <label for="roic">ROIC</label><br>
+            <input onkeyup="justNumbersPerc(this);toPercent(this)" onblur='checkEmpty(this)' name='roic' id='roic' type="text">
+            <span class='spanCampEmpty'>*Campo vazio!</span>
+        </div>
+        
+        <!--    Dividend Yield   -->
+        <div class="formItem">
+            <label for="dYield">Dividend Yield</label><br>
+            <input onblur='checkEmpty(this)' onkeyup="justNumbersPerc(this);toPercent(this)" name='dYield' id='dYield' type="text">
+            <span class='spanCampEmpty'>*Campo vazio!</span>
+        </div>
+        
+        <!--    Crescimento da Receita   -->
+        <div class="formItem">
+            <label for="crescres">Crescimento da Receita (5 anos)</label><br>
+            <input onkeyup="justNumbersPerc(this);toPercent(this)" onblur='checkEmpty(this)' name='cresres' id='cresres' type="text">
             <span class='spanCampEmpty'>*Campo vazio!</span>
         </div>
         
         <!--    Divida Bruta   -->
         <div class="formItem">
-            <input placeholder="Dívida Bruta" onblur='checkEmpty(this)'  onkeyup="justNumbers(this)"  name="divB" id="divB" type="text">
-            <span class='spanCampEmpty'>*Campo vazio!</span>
-        </div>
-        
-        <!--    Disponibilidades   -->
-        <div class="formItem">
-            <input placeholder="Disponibilidades" onblur='checkEmpty(this)'   onkeyup="justNumbers(this)"  name="disp" id="disp" type="text">
-            <span class='spanCampEmpty'>*Campo vazio!</span>
-        </div>
-        
-        <!--    Ativos Circulantes  -->
-        <div class="formItem">
-            <input placeholder="Ativos Circulantes" onblur='checkEmpty(this)'   onkeyup="justNumbers(this)"  name="ativC" id="ativC" type="text">
-            <span class='spanCampEmpty'>*Campo vazio!</span>
-        </div>
-        
-        <!--    Ativos   -->
-        <div class="formItem">
-            <input placeholder="Ativos" onblur='checkEmpty(this)'   onkeyup="justNumbers(this)"  name="ativ" id="ativ" type="text">
+            <label for="divB">Dívida Bruta</label><br>
+            <input onblur='checkEmpty(this)'  onkeyup="justNumbers(this)"  name="divB" id="divB" type="text">
             <span class='spanCampEmpty'>*Campo vazio!</span>
         </div>
         
         <!--    Patrimonio Líquido   -->
         <div class="formItem">
-            <input placeholder="Patrimonio Líquido" onblur='checkEmpty(this)'   onkeyup="justNumbers(this)"  name="patLiq" id="patLiq" type="text"><span class='spanCampEmpty'>*Campo vazio!</span>
+            <label for="patLiq">Patrimonio Líquido</label><br>
+            <input onblur='checkEmpty(this)'   onkeyup="justNumbers(this)"  name="patLiq" id="patLiq" type="text"><span class='spanCampEmpty'>*Campo vazio!</span>
+        </div>
+        
+        <!--    Ativos   -->
+        <div class="formItem">
+            <label for="ativ">Ativo</label><br>
+            <input onblur='checkEmpty(this)'   onkeyup="justNumbers(this)"  name="ativ" id="ativ" type="text">
+            <span class='spanCampEmpty'>*Campo vazio!</span>
+        </div>
+        
+        <!--    Disponibilidades   -->
+        <div class="formItem">
+            <label for="disp">Disponibilidades</label><br>
+            <input onblur='checkEmpty(this)'   onkeyup="justNumbers(this)"  name="disp" id="disp" type="text">
+            <span class='spanCampEmpty'>*Campo vazio!</span>
+        </div>
+        
+        <!--    Ativos Circulantes  -->
+        <div class="formItem">
+            <label for="ativC">Ativos Circulantes</label><br>
+            <input onblur='checkEmpty(this)'   onkeyup="justNumbers(this)"  name="ativC" id="ativC" type="text">
+            <span class='spanCampEmpty'>*Campo vazio!</span>
         </div>
         
         <!--    Receita Liquida 12 meses   -->
         <div class="formItem">
-            <input placeholder="Receita Líquida (12 meses)"   onkeyup="justNumbers(this)"  onblur='checkEmpty(this)' name="recL12" id="recL12" type="text"><span class='spanCampEmpty'>*Campo vazio!</span>
+            <label for="recL12">Receita Líquida (12 meses)</label><br>
+            <input onkeyup="justNumbers(this)"  onblur='checkEmpty(this)' name="recL12" id="recL12" type="text"><span class='spanCampEmpty'>*Campo vazio!</span>
         </div>
         
         <!--    EEBIT 12 meses   -->
         <div class="formItem">
-            <input placeholder="Ebit (12 meses)" onblur='checkEmpty(this)'   onkeyup="justNumbers(this)"  name="ebit12" id="ebit12" type="text"><span class='spanCampEmpty'>*Campo vazio!</span>
+            <label for="ebit12">Ebit (12 meses)</label><br>
+            <input onblur='checkEmpty(this)'   onkeyup="justNumbers(this)"  name="ebit12" id="ebit12" type="text"><span class='spanCampEmpty'>*Campo vazio!</span>
         </div>
         
         <!--    Lucro Liquido 12 meses   -->
         <div class="formItem">
-            <input placeholder="Lucro Líquido (12 meses)" onblur='checkEmpty(this)'  onkeyup="justNumbers(this)"   name="lucLiq12" id="lucLiq12" type="text"><span class='spanCampEmpty'>*Campo vazio!</span>
+            <label for="lucLiq12">Lucro Líquido (12 meses)</label><br>
+            <input onblur='checkEmpty(this)'  onkeyup="justNumbers(this)" name="lucLiq12" id="lucLiq12" type="text"><span class='spanCampEmpty'>*Campo vazio!</span>
         </div>
         
-        <!--    receita Liquida   -->
+        <!--    receita Liquida 3 meses  -->
         <div class="formItem">
-            <input placeholder="Receita Líquida (3 meses)" onblur='checkEmpty(this)'  onkeyup="justNumbers(this)"   name="recL3" id="recL3" type="text"><span class='spanCampEmpty'>*Campo vazio!</span>
+            <label for="recL3">Receita Líquida (3 meses)</label><br>
+            <input onblur='checkEmpty(this)'  onkeyup="justNumbers(this)"   name="recL3" id="recL3" type="text"><span class='spanCampEmpty'>*Campo vazio!</span>
         <input type='submit' value="Enviar">
     </form>
+    <div class="inform">
+        cag
+    </div>
 </div>
 </section>
 <script src = "js/formValidate.js"></script>
 <script src = "js/selectConstruction.js"></script>
+<script src = "js/empName.js"></script>
 
 </body>
 </html>

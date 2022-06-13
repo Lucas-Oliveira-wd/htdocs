@@ -22,7 +22,9 @@ function justLetters (e){
     };
     let nval = ''; //nova variavel com so com letras
     for(i=0;i<arr.length;i++){
-        nval = nval.concat('',arr[i]);
+        if(arr[i] != undefined){  // retirando os undifineds
+            nval = nval.concat('',arr[i]);
+        }
     }
     e.value = nval; // substituindo o valor do input
 };

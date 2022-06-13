@@ -11,18 +11,33 @@
     <link rel="manifest" href="/site.webmanifest">
     <link type="text/css" rel="stylesheet" href="css/geral.css"/>
     <link type="text/css" rel="stylesheet" href="css/formUp.css"/>
+    <link type="text/css" rel="stylesheet" href="css/header.css"/>
 </head>
 <body onload="writeCod (document.querySelector('#setor'))">
+    <header>
+        <div class="container">
+            <nav>
+                <ul class="main-menu">
+                    <li class="menu-item">
+                        <a href="index.html">Cadastrar Empresa</a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="">Lorem, ipsum.</a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="">Lorem, ipsum.</a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="">Lorem, ipsum.</a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="">Lorem, ipsum.</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 <?php
-
-        #Function to filter date (segurity)
-        function filterData($data){
-            $data = trim($data);
-            $data = stripslashes($data);
-            $data = htmlspecialchars($data);
-            return $data;
-        }
-
 
         //define variables and set to empty values
         $setor = $cod = $empName = $ultBal = $cotAtual = $roic = $cresres = $divYield = $numAcoes = $divBruta = $disp =
@@ -39,7 +54,8 @@
             if (empty($_POST['setor'])) {
                 $setorErr = "Selecione um Setor";
             } else {
-                $setor = filterData($_POST['setor']);
+                $setor = $_POST['setor'];
+                $setor = filterData($setor);
             };
 
             if (empty($_POST['cod'])) {
@@ -143,10 +159,18 @@
             if (empty($_POST['recL3'])) {
                 $recLiq3Err = "Informe o valor da receita líquida nos últimos 3 meses!";
             } else {
-                $recLiq3 =filterData($_POST['recL3']);
+                $recLiq3 = filterData($_POST['recL3']);
             };
             
             
+        }
+
+        #Function to filter date (segurity)
+        function filterData($data){
+            $data = trim($data);
+            $data = stripslashes($data);
+            $data = htmlspecialchars($data);
+            return $data;
         }
 
         #function to transforme decimal to float (substitute "," to ".")
@@ -176,33 +200,33 @@ $servername = "localhost";
 $password = NULL;
 $dbname = "invest";
 
-// Create connection
-$conn = mysqli_connect($servername, $username, $password, $dbname);
+/// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
 
 // Check connection
 if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-  }
+  die("Connection failed: " . $conn->connect_error);
+};
 
-$sql = "INSERT INTO a_03_2022 (
-    setor,codigo,empName,datUltBal,cotAtual,roic,cresRec5a,divYield,numAcoes,divB,disp,ativCirc,arivos,patLiq,recLiq12,
-    ebit12,lucLiq12,recLiq3
+$sql = "INSERT INTO acoesB3 (
+    setor,codigo,empName,ultBal,cotAtual,roic,cresRec5a,divYield,nAcoes,divBruta,disponib,ativCirc,ativos,patLiq,recLiq12m,
+    ebit12m,LucLiq12m,recLiq3m
     )
 VALUES (
-    $setor,$cod,$empName,$ultBal,$cotAtual,$roic,$cresres,$divYield,$numAcoes,$divBruta,$disp,$ativCirc,$ativos,$patLiq,$recLiq12,
+    '$setor','$cod','$empName','$ultBal',$cotAtual,$roic,$cresres,$divYield,$numAcoes,$divBruta,$disp,$ativCirc,$ativos,$patLiq,$recLiq12,
     $ebit12,$lucLiq12,$recLiq3
     );";
-echo 'os inputs são:'.$setor.' '.$cod.' '.$empName.' '.$ultBal.' '.$cotAtual.' '.$roic.' '.$cresres.' '.$divYield.' '.$numAcoes.' '.$divBruta.' '.$disp.' '.$ativCirc.' '.$ativos.' 
+echo 'os inputs são:'.trim($setor).' '.$cod.' '.trim($empName).' '.$ultBal.' '.$cotAtual.' '.$roic.' '.$cresres.' '.$divYield.' '.$numAcoes.' '.$divBruta.' '.$disp.' '.$ativCirc.' '.$ativos.' 
 '.$patLiq.' '.$recLiq12.' '.$ebit12.' '.$lucLiq12.' '.$recLiq3;
 
 
-if (mysqli_query($conn, $sql)) {
+if ($conn->query($sql) === TRUE) {
     echo "New record created successfully";
   } else {
-    echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+    echo "Error: " . $sql . "<br>" . $conn->error;
   }
   
-  mysqli_close($conn);
+  $conn->close();
 ?>
 <script src = "js/formValidate.js"></script>
 <script src = "js/selectConstruction.js"></script>
