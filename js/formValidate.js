@@ -7,7 +7,9 @@ function checkEmpty(e){
 };
 
 function sc (e){
-    console.log(e.charCodeAt(0))
+    for (i = 0; i<e.length; i++){
+       console.log(e.charCodeAt(i)) 
+    }
 };
 // funcao para permitir Apenas Letras
 // !IMPORTANTE: usar o evento keypressup para chamar essa funcao
@@ -92,9 +94,11 @@ function toPercent(e){
     let val = '';
     let dec = '';
     let befVirg = '';
+    console.log('toPercent rodou!')
     for(i=0;i<e.value.length;i++){
         let char = e.value.charAt(i);
-        if(char!==','&&char!=='%'&&char!=='-'){
+        if(char!==','&&char!=='%'){
+            console.log("char: "+char)
             val = val.concat('',e.value[i]);
         }
     }
@@ -105,17 +109,20 @@ function toPercent(e){
 //Funcao para permitir apenas numeros com formato de porcentagem
 // !IMPORTANTE: usar o evento keypressup para chamar essa funcao
 function justNumbersPerc (e){
+    console.log("justNumbersPerc rodou!")
     let val = e.value;
     let arr = ['']; //array para conter os caracteres
     for (i=0;i<val.length;i++) {
         let codI = val.charCodeAt(i);
+        console.log('codI: '+codI)
         if(codI>=48&&codI<=57||codI==44||codI==37||codI==45/*charCode de (',','%','-')*/){
         arr[i] = val[i];  
         }
     };
-    let nval = ''; //nova variavel com so com letras
+    let nval = ''; //nova variavel com so com os valores filtrados
     for(i=0;i<arr.length;i++){
         nval = nval.concat('',arr[i]);
+        console.log("arr[i]: "+arr[i])
     }
     e.value = nval; // substituindo o valor do input
 };

@@ -28,7 +28,7 @@ form[name='up']{
 #secForm .inform{
     position: fixed;
     right: 10%;
-    top: 5%;
+    top: 25%;
     max-width: fit-content;
     bottom: 0;
 }

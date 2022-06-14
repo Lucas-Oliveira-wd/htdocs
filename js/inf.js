@@ -45,4 +45,16 @@ function showInf(){
     if (patLiq != '' && nAc != ''){
         document.querySelector('#inf-vpa'). innerHTML = 'VPA: '+ (patLiq/nAc).toFixed(2);
     };
+
+    // mostrar marg. ebit
+    let ebit = document.forms['up']['ebit12'].value;
+    let recLiq = document.forms['up']['recL12'].value;
+    if(ebit != '' && recLiq != ''){
+        document.querySelector('#inf-marg-ebit').innerHTML = (((ebit/recLiq)*100).toFixed(1)+'%');
+    };
+
+    //mostrar marg. Líquida
+    if(lucLiqA != '' && recLiq != ''){
+        document.querySelector('#inf-marg-liq').innerHTML = (((lucLiqA/recLiq)*100).toFixed(1)+'%');
+    };
 };

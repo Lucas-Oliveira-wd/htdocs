@@ -4,7 +4,7 @@ const empName = {
     'PETR4': 'PETROBRAS PN',
     'BRKM6': 'BRASKEM PNB N1',
     'CSNA3': 'CSN ON',
-    'GOAU3': 'METALÚRGICA GERDAU PN N1',
+    'GOAU4': 'METALÚRGICA GERDAU PN N1',
     'ITSA4': 'ITAÚSA PN N1',
     'USIM5': 'USIMINAS PNA N1',
     'WEGE3': 'WEG SA ON N1',
@@ -22,7 +22,7 @@ const empName = {
     'HBTS5': 'CIA HABITASUL PNA',
     'KEPL3': 'KEPLER WEBER SA ON',
     'MTSA4': 'METISA PN',
-    'PATI3': 'PANATLANTICA PN'
+    'PATI4': 'PANATLANTICA PN'
 };
 
 function wrtEmpName(){

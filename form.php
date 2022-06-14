@@ -38,7 +38,9 @@
         </div>
     </header>
 <?php
+        
 
+        echo filter_list();
         //define variables and set to empty values
         $setor = $cod = $empName = $ultBal = $cotAtual = $roic = $cresres = $divYield = $numAcoes = $divBruta = $disp =
         $ativCirc = $ativos = $patLiq = $recLiq12 = $ebit12 = $lucLiq12 = $recLiq3 = '';
@@ -92,7 +94,7 @@
             if (empty($_POST['cresres'])) {
                 $cresresErr = "Informe o crescimento da Receita da empres nos últimos 5 anos";
             } else {
-                $cresres = tofloat(filterData($_POST['cresres']));
+                $cresres = filterData($_POST['cresres']);
             };
 
             if (empty($_POST['dYield'])) {
