@@ -37,7 +37,7 @@ function justNumbers (e){
     let arr = ['']; //array para conter os caracteres
     for (i=0;i<val.length;i++) {
         let codI = val.charCodeAt(i);
-        if(codI>=48&&codI<=57){
+        if(codI>=48&&codI<=57||(codI==45 && i==0)){
         arr[i] = val[i];  
         }
     };
@@ -94,15 +94,12 @@ function toPercent(e){
     let befVirg = '';
     for(i=0;i<e.value.length;i++){
         let char = e.value.charAt(i);
-        if(char!==','&&char!=='%'){
+        if(char!==','&&char!=='%'&&char!=='-'){
             val = val.concat('',e.value[i]);
         }
-        console.log("val: "+val);
     }
     dec = val.slice(val.length-1);
-    console.log('dec: '+dec);
     befVirg = val.slice(0,val.length-1);
-    console.log("befVirg: "+befVirg);
     e.value = befVirg+','+dec+'%';
 }
 //Funcao para permitir apenas numeros com formato de porcentagem
@@ -112,7 +109,7 @@ function justNumbersPerc (e){
     let arr = ['']; //array para conter os caracteres
     for (i=0;i<val.length;i++) {
         let codI = val.charCodeAt(i);
-        if(codI>=48&&codI<=57||codI==44||codI==37/*charCode de (',','%')*/){
+        if(codI>=48&&codI<=57||codI==44||codI==37||codI==45/*charCode de (',','%','-')*/){
         arr[i] = val[i];  
         }
     };

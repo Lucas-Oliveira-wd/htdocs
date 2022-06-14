@@ -4,7 +4,6 @@
 }
 #secForm .container{
     position: relative;
-    background-color: aqua;
 }
 .stTitle{
     text-align: center;
@@ -27,10 +26,9 @@ form[name='up']{
 }
 
 #secForm .inform{
-    background-color: forestgreen;
-    position: absolute;
-    right: 0%;
-    top: 10%;
-    left: 30%;
+    position: fixed;
+    right: 10%;
+    top: 5%;
+    max-width: fit-content;
     bottom: 0;
 }
