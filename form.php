@@ -12,9 +12,13 @@
     <link type="text/css" rel="stylesheet" href="css/geral.css"/>
     <link type="text/css" rel="stylesheet" href="css/formUp.css"/>
     <link type="text/css" rel="stylesheet" href="css/header.css"/>
+    <link type="text/css" rel="stylesheet" href="css/form-inf.css"/>
 </head>
-<body onload="writeCod (document.querySelector('#setor'))">
-    <header>
+<body>
+
+<?php
+echo 
+'  <header>
         <div class="container">
             <nav>
                 <ul class="main-menu">
@@ -25,7 +29,7 @@
                         <a href="">Lorem, ipsum.</a>
                     </li>
                     <li class="menu-item">
-                        <a href="">Lorem, ipsum.</a>
+                        <a href="consult.php">Consultar</a>
                     </li>
                     <li class="menu-item">
                         <a href="">Lorem, ipsum.</a>
@@ -36,11 +40,10 @@
                 </ul>
             </nav>
         </div>
-    </header>
+    </header>'
+?>
 <?php
         
-
-        echo filter_list();
         //define variables and set to empty values
         $setor = $cod = $empName = $ultBal = $cotAtual = $roic = $cresres = $divYield = $numAcoes = $divBruta = $disp =
         $ativCirc = $ativos = $patLiq = $recLiq12 = $ebit12 = $lucLiq12 = $recLiq3 = '';
@@ -94,7 +97,7 @@
             if (empty($_POST['cresres'])) {
                 $cresresErr = "Informe o crescimento da Receita da empres nos últimos 5 anos";
             } else {
-                $cresres = filterData($_POST['cresres']);
+                $cresres = tofloat(filterData($_POST['cresres']));
             };
 
             if (empty($_POST['dYield'])) {
@@ -230,8 +233,6 @@ if ($conn->query($sql) === TRUE) {
   
   $conn->close();
 ?>
-<script src = "js/formValidate.js"></script>
-<script src = "js/selectConstruction.js"></script>
 
 </body>
 </html>

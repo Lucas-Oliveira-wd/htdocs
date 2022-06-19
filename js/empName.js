@@ -22,7 +22,9 @@ const empName = {
     'HBTS5': 'CIA HABITASUL PNA',
     'KEPL3': 'KEPLER WEBER SA ON',
     'MTSA4': 'METISA PN',
-    'PATI4': 'PANATLANTICA PN'
+    'PATI4': 'PANATLANTICA PN',
+    'ATOM3': 'ATOMPAR ON',
+    'SOND5': 'SONDOTECNICA S/A. PNA'
 };
 
 function wrtEmpName(){

@@ -1,0 +1,15 @@
+table{
+    font-size: .8rem;
+}
+table, th{
+    border: 1px solid #222;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+th, td{
+    padding: .1rem .2rem;
+}
+td{
+    border-right: 1px solid #222;
+    border-left: 1px solid #222;
+}
