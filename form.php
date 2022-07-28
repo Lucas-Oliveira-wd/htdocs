@@ -26,7 +26,7 @@ echo
                         <a href="index.html">Cadastrar Empresa</a>
                     </li>
                     <li class="menu-item">
-                        <a href="">Lorem, ipsum.</a>
+                        <a href="refresh.html">Atualizar Empresa</a>
                     </li>
                     <li class="menu-item">
                         <a href="consult.php">Consultar</a>

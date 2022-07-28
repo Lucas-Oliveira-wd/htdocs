@@ -1,3 +1,6 @@
+#sec-consult{
+    margin-top: 5rem;
+}
 table{
     font-size: .8rem;
 }
@@ -12,4 +15,10 @@ th, td{
 td{
     border-right: 1px solid #222;
     border-left: 1px solid #222;
+}
+
+tr:nth-child(3), tr:nth-child(5), tr:nth-child(7), tr:nth-child(9), tr:nth-child(11),
+tr:nth-child(13), tr:nth-child(15), tr:nth-child(17), tr:nth-child(19), tr:nth-child(21),
+tr:nth-child(23){
+    background-color: #ddd;
 }
