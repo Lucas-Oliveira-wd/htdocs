@@ -31,7 +31,7 @@ if ($conn->connect_error) {
 };
 
 $sql = "SELECT codigo, cotAtual, roic, cresRec5a, divYield, nAcoes, divBruta, disponib, ativCirc, ativos,
-patLiq, recLiq12m, LucLiq12m, ebit12m FROM acoesb3 WHERE ultBal = '2022-03-31'";
+patLiq, recLiq12m, LucLiq12m, ebit12m, recLiq3m FROM acoesb3 WHERE ultBal = '2022-03-31'";
 $ub0322 = $conn->query($sql);
 
 echo //criando a página
@@ -64,7 +64,7 @@ echo //criando a página
     <div class="container">';
 
 $pl = $pv = $cod = $roe = $roic = $p_cxa = $divb_patl = $p_ativc = $p_ativ = $divb_cx = $marg_ebit = $marg_liq
-= $cres_rec = $divY = $lynch = $perRes = $divbLuc = array();
+= $cres_rec = $divY = $lynch = $perRes = $divbLuc = $desv_pad_rec = $mean = $variance =  array();
 
 if ($ub0322->num_rows > 0) {
     echo
@@ -108,7 +108,7 @@ if ($ub0322->num_rows > 0) {
       array_push($lynch, round((($row['divYield']+($row['cresRec5a']/5))/($row['cotAtual']/($row['LucLiq12m']/$row['nAcoes']))), 2)); //Lynch
       array_push($perRes, round(($row['disponib']/(($row['recLiq12m']-$row['LucLiq12m'])/12)), 2)); //Período de Resistência
       array_push($divbLuc, round(($row['divBruta']/($row['LucLiq12m']/12)), 2)); //Dívida Bruta/Lucro Líquido Mensal
-      
+      array_push($desv_pad_rec, round(((((($row['recLiq12m']/4-((($row['recLiq12m']/4)+$row['recLiq3m'])/2))**2+($row['recLiq3m']-((($row['recLiq12m']/4)+$row['recLiq3m'])/2))**2)/2)**(1/2)/((($row['recLiq12m']/4)+$row['recLiq3m'])/2))*100), 3)); //Desvio Padrão Relativos das Receitas trimestrais e anuais
       ;
       
     }
@@ -134,6 +134,7 @@ for($i=0;$i<count($pl);$i++){
         <td>'.$lynch[$i].'</td>
         <td>'.$perRes[$i].'</td>
         <td>'.$divbLuc[$i].'</td>
+        <td>'.$desv_pad_rec[$i].'</td>
         
     </tr>';
 }
@@ -171,6 +172,7 @@ $divYN[$i] = round(($divY[$i] - min($divY))/(max($divY) - min($divY)), 3);
 $lynchN[$i] = round(($lynch[$i] - min($lynch))/(max($lynch) - min($lynch)), 3);
 $perResN[$i] = round(($perRes[$i] - min($perRes))/(max($perRes) - min($perRes)), 3);
 $divbLucN[$i] = round(($divbLuc[$i] - min($divbLuc))/(max($divbLuc) - min($divbLuc)), 3);
+$desv_pad_recN[$i] = round(($desv_pad_rec[$i] - min($desv_pad_rec))/);
 }
 
 for($i=0;$i<count($cod);$i++){//mudando os valores com o bjetivo de minimizacão (quanto menor melhor)
@@ -185,34 +187,22 @@ $divbLucNMin[$i] = 1 - $divbLucN[$i];
 }
 
 for ($i=0;$i<count($cod);$i++){
-    $best[$cod[$i]] = 
-    $roeN[$i] +
-    $roicN[$i] +
-    $marg_ebitN[$i] +
-    $marg_liqN[$i] +
-    $cres_recN[$i] +
-    $divYN[$i] +
-    $lynchN[$i] +
-    $perResN[$i] +
-    $plNMin[$i] +
-    $pvNMin[$i] +
-    $p_cxaNMin[$i] +
-    $divb_patlNMin[$i] +
-    $p_ativcNMin[$i] +
-    $p_ativNMin[$i] +
-    $divb_cxNMin[$i] +
-    $divbLucNMin[$i];
+    $best[$i] = 
+        $bestc[$i] = $cod[$i]; $bestv[$i] =
+        $roeN[$i] + $roicN[$i] + $marg_ebitN[$i] + $divYN[$i] + $lynchN[$i] + $perResN[$i] + $plNMin[$i] +
+        $pvNMin[$i] + $p_cxaNMin[$i] + $divb_patlNMin[$i] + $p_ativcNMin[$i] + $p_ativNMin[$i] + $divb_cxNMin[$i] +
+        $divbLucNMin[$i];
 };
 
+array_multisort ($bestv, SORT_NUMERIC, SORT_DESC, $bestc);
 echo '<ol>';
 for($i=0;$i<count($cod);$i++){
-    echo '<ul>'.$cod[$i].': '.$best[$cod[$i]].'</ul>';
+    echo '<ul>'.$bestc[$i].': '.$bestv[$i].'</ul>';
 }
 echo '</ol>';
 
 echo
-        '</table>
-    </div>
+    '</div>
 </section>';
 
 ?>
