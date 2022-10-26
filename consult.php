@@ -31,8 +31,8 @@ if ($conn->connect_error) {
 };
 
 $sql = "SELECT codigo, cotAtual, roic, cresRec5a, divYield, nAcoes, divBruta, disponib, ativCirc, ativos,
-patLiq, recLiq12m, LucLiq12m, ebit12m, recLiq3m FROM acoesb3 WHERE ultBal = '2022-03-31'";
-$ub0322 = $conn->query($sql);
+patLiq, recLiq12m, LucLiq12m, ebit12m, recLiq3m FROM acoesb3 WHERE ultBal = '2022-06-30'"; // the WHERE means to the ultimo balaço processado
+$ub0622 = $conn->query($sql);
 
 echo //criando a página
 '<header>
@@ -66,7 +66,7 @@ echo //criando a página
 $pl = $pv = $cod = $roe = $roic = $p_cxa = $divb_patl = $p_ativc = $p_ativ = $divb_cx = $marg_ebit = $marg_liq
 = $cres_rec = $divY = $lynch = $perRes = $divbLuc = $desv_pad_rec = $mean = $variance =  array();
 
-if ($ub0322->num_rows > 0) {
+if ($ub0622->num_rows > 0) {
     echo
 "<table>
     <tr>
@@ -90,7 +90,7 @@ if ($ub0322->num_rows > 0) {
         <th>Desv.Pad. das Receitas</th>
     </tr>";
     // output data of each row
-    while($row = $ub0322->fetch_assoc()) {
+    while($row = $ub0622->fetch_assoc()) {
         array_push($cod,$row['codigo']); //Código
       array_push($pl, round(($row['cotAtual']/($row['LucLiq12m']/$row['nAcoes'])), 2));// P/L
       array_push($pv, round(($row['cotAtual']/($row['patLiq']/$row['nAcoes'])), 2)); //P/VPA
@@ -172,7 +172,7 @@ $divYN[$i] = round(($divY[$i] - min($divY))/(max($divY) - min($divY)), 3);
 $lynchN[$i] = round(($lynch[$i] - min($lynch))/(max($lynch) - min($lynch)), 3);
 $perResN[$i] = round(($perRes[$i] - min($perRes))/(max($perRes) - min($perRes)), 3);
 $divbLucN[$i] = round(($divbLuc[$i] - min($divbLuc))/(max($divbLuc) - min($divbLuc)), 3);
-$desv_pad_recN[$i] = round(($desv_pad_rec[$i] - min($desv_pad_rec))/);
+$desv_pad_recN[$i] = round(($desv_pad_rec[$i] - min($desv_pad_rec))/(max($desv_pad_rec)-min($desv_pad_rec)));
 }
 
 for($i=0;$i<count($cod);$i++){//mudando os valores com o bjetivo de minimizacão (quanto menor melhor)
@@ -184,6 +184,7 @@ $p_ativcNMin[$i] = 1 - $p_ativcN[$i];
 $p_ativNMin[$i] = 1 - $p_ativN[$i];
 $divb_cxNMin[$i] = 1 - $divb_cxN[$i];
 $divbLucNMin[$i] = 1 - $divbLucN[$i];
+$desv_pad_recNMin[$i] = 1 - $desv_pad_recN[$i];
 }
 
 for ($i=0;$i<count($cod);$i++){
@@ -191,7 +192,7 @@ for ($i=0;$i<count($cod);$i++){
         $bestc[$i] = $cod[$i]; $bestv[$i] =
         $roeN[$i] + $roicN[$i] + $marg_ebitN[$i] + $divYN[$i] + $lynchN[$i] + $perResN[$i] + $plNMin[$i] +
         $pvNMin[$i] + $p_cxaNMin[$i] + $divb_patlNMin[$i] + $p_ativcNMin[$i] + $p_ativNMin[$i] + $divb_cxNMin[$i] +
-        $divbLucNMin[$i];
+        $divbLucNMin[$i] + $desv_pad_recNMin[$i];
 };
 
 array_multisort ($bestv, SORT_NUMERIC, SORT_DESC, $bestc);
