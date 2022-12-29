@@ -14,6 +14,7 @@
     <link type="text/css" rel="stylesheet" href="css/header.css"/>
     <link type="text/css" rel="stylesheet" href="css/form-inf.css"/>
     <link type="text/css" rel="stylesheet" href="css/consult.css"/>
+    <link type="text/css" rel="stylesheet" href="css/pie_chart.css"/>
 </head>
 <body>
 <?php
@@ -31,7 +32,7 @@ if ($conn->connect_error) {
 };
 
 $sql = "SELECT codigo, cotAtual, roic, cresRec5a, divYield, nAcoes, divBruta, disponib, ativCirc, ativos,
-patLiq, recLiq12m, LucLiq12m, ebit12m, recLiq3m FROM acoesb3 WHERE ultBal = '2022-03-31'";
+patLiq, recLiq12m, LucLiq12m, ebit12m, recLiq3m FROM acoesb3 WHERE ultBal = '2022-09-30'";
 $ub0322 = $conn->query($sql);
 
 echo //criando a página
@@ -108,7 +109,7 @@ if ($ub0322->num_rows > 0) {
       array_push($lynch, round((($row['divYield']+($row['cresRec5a']/5))/($row['cotAtual']/($row['LucLiq12m']/$row['nAcoes']))), 2)); //Lynch
       array_push($perRes, round(($row['disponib']/(($row['recLiq12m']-$row['LucLiq12m'])/12)), 2)); //Período de Resistência
       array_push($divbLuc, round(($row['divBruta']/($row['LucLiq12m']/12)), 2)); //Dívida Bruta/Lucro Líquido Mensal
-      array_push($desv_pad_rec, round(((((($row['recLiq12m']/4-((($row['recLiq12m']/4)+$row['recLiq3m'])/2))**2+($row['recLiq3m']-((($row['recLiq12m']/4)+$row['recLiq3m'])/2))**2)/2)**(1/2)/((($row['recLiq12m']/4)+$row['recLiq3m'])/2))*100), 3)); //Desvio Padrão Relativos das Receitas trimestrais e anuais
+      array_push($desv_pad_rec, round(((((($row['recLiq12m']/4-((($row['recLiq12m']/4)+$row['recLiq3m'])/2))**2+($row['recLiq3m']-((($row['recLiq12m']/4)+$row['recLiq3m'])/2))**2)/2)**(1/2)/abs((($row['recLiq12m']/4)+$row['recLiq3m'])/2))*100), 3)); //Desvio Padrão Relativos das Receitas trimestrais e anuais
       ;
       
     }
@@ -153,8 +154,15 @@ echo
 echo
 '<Section id="sec-rank">
     <div class="container">';
-//Normalizando os dados(fórmula=>X_new = (X - X_min)/(X_max - X_min))
 
+
+//retirando os valores negativos das variaveis com o objetivo de minimização e colocando o valor max    
+for ($i=0;$i<count($cod);$i++){
+    if ($pl[$i] < 0){
+        $pl[$i] = max($pl);
+    };
+};
+//Normalizando os dados(fórmula=>X_new = (X - X_min)/(X_max - X_min))
 for ($i=0;$i<count($cod);$i++){
 $plN[$i] = round(($pl[$i] - min($pl))/(max($pl) - min($pl)), 3);
 $pvN[$i] = round(($pv[$i] - min($pv))/(max($pv) - min($pv)), 3);
@@ -172,7 +180,7 @@ $divYN[$i] = round(($divY[$i] - min($divY))/(max($divY) - min($divY)), 3);
 $lynchN[$i] = round(($lynch[$i] - min($lynch))/(max($lynch) - min($lynch)), 3);
 $perResN[$i] = round(($perRes[$i] - min($perRes))/(max($perRes) - min($perRes)), 3);
 $divbLucN[$i] = round(($divbLuc[$i] - min($divbLuc))/(max($divbLuc) - min($divbLuc)), 3);
-$desv_pad_recN[$i] = round(($desv_pad_rec[$i] - min($desv_pad_rec))/);
+$desv_pad_recN[$i] = round(($desv_pad_rec[$i] - min($desv_pad_rec))/(max($desv_pad_rec)-min($desv_pad_rec)));
 }
 
 for($i=0;$i<count($cod);$i++){//mudando os valores com o bjetivo de minimizacão (quanto menor melhor)
@@ -184,25 +192,75 @@ $p_ativcNMin[$i] = 1 - $p_ativcN[$i];
 $p_ativNMin[$i] = 1 - $p_ativN[$i];
 $divb_cxNMin[$i] = 1 - $divb_cxN[$i];
 $divbLucNMin[$i] = 1 - $divbLucN[$i];
-}
+$desv_pad_recNMin[$i] = 1 - $desv_pad_recN[$i];
+};
+
 
 for ($i=0;$i<count($cod);$i++){
     $best[$i] = 
         $bestc[$i] = $cod[$i]; $bestv[$i] =
         $roeN[$i] + $roicN[$i] + $marg_ebitN[$i] + $divYN[$i] + $lynchN[$i] + $perResN[$i] + $plNMin[$i] +
         $pvNMin[$i] + $p_cxaNMin[$i] + $divb_patlNMin[$i] + $p_ativcNMin[$i] + $p_ativNMin[$i] + $divb_cxNMin[$i] +
-        $divbLucNMin[$i];
+        $divbLucNMin[$i] + $desv_pad_recNMin[$i];
 };
 
 array_multisort ($bestv, SORT_NUMERIC, SORT_DESC, $bestc);
 echo '<ol>';
 for($i=0;$i<count($cod);$i++){
-    echo '<ul>'.$bestc[$i].': '.$bestv[$i].'</ul>';
+    echo '<li>'.$bestc[$i].': '.$bestv[$i].'</li>';
 }
 echo '</ol>';
 
+
 echo
     '</div>
+</section>';
+
+
+$acoesCart = array("ENAT3", "CTSA4", "CSNA3", "GPIV33", "TRPL4", "CRPG6", "BRSR6"); // array com as ações da carteira, !importante deixar a acão do banco por ultimo
+
+for ($i=0;$i<count($bestc);$i++){
+    for($j=0;$j<count($acoesCart)-1;$j++){ // o -1 é para não incluir a acao do banco
+        if($bestc[$i] == $acoesCart [$j]){
+            $acoesCartVal[$j] = $bestv[$i];
+        }
+    }
+};
+/*  transformando os pontos das acoes na carteira em porcentagem */
+for ($j=0;$j<count($acoesCart)-1;$j++){
+    $acoesCartValPerc[$j] = round($acoesCartVal[$j]*(87.5/array_sum($acoesCartVal)), 2);
+};
+$acoesCartValPerc[count($acoesCart)-1] = 12.5;
+
+
+echo
+'<section id="sec_pie_chart">
+    <div class="container">
+        <h1>Objetivo das ações na carteira</h1>';
+/* criando os arrays para o pi chart com legenda */
+$colors = array("brown", "black", "blue", "green", "yellow", "orange", "red", "aqua", "purple"); //array das cores;
+$valPercAc = array(0.00, $acoesCartValPerc[0], $acoesCartValPerc[0]+$acoesCartValPerc[1], $acoesCartValPerc[0]+$acoesCartValPerc[1]+$acoesCartValPerc[2], $acoesCartValPerc[0]+$acoesCartValPerc[1]+$acoesCartValPerc[2]+$acoesCartValPerc[3], $acoesCartValPerc[0]+$acoesCartValPerc[1]+$acoesCartValPerc[2]+$acoesCartValPerc[3]+$acoesCartValPerc[4], $acoesCartValPerc[0]+$acoesCartValPerc[1]+$acoesCartValPerc[2]+$acoesCartValPerc[3]+$acoesCartValPerc[4]+$acoesCartValPerc[5], $acoesCartValPerc[0]+$acoesCartValPerc[1]+$acoesCartValPerc[2]+$acoesCartValPerc[3]+$acoesCartValPerc[4]+$acoesCartValPerc[5]+$acoesCartValPerc[6]);
+
+
+echo
+'<div id="my-pie-chart-container">
+<div id="my-pie-chart" style="background: conic-gradient(brown '.$valPercAc[0].'% '.$valPercAc[1].'% , black '.$valPercAc[1].'% '.$valPercAc[2].'%, blue '.$valPercAc[2].'% '.$valPercAc[3].'%, green '.$valPercAc[3].'% '.$valPercAc[4].'%, yellow '.$valPercAc[4].'% '.$valPercAc[5].'%, orange '.$valPercAc[5].'% '.$valPercAc[6].'%, red '.$valPercAc[6].'% '.$valPercAc[7]+12.5.'%); border-radius: 50%; width: 400px; height: 400px"></div>
+
+  <div id="legenda">';
+
+  for ($i=0; $i<count($acoesCart);$i++){
+    echo '<div class="entry">
+    <div id="color-'.$colors[$i].'" class="entry-color"></div>
+    <div class="entry-text">'.$acoesCart[$i].': '.$acoesCartValPerc[$i].' %</div></br>';
+  }; 
+
+  echo  
+  '</div>
+</div>;';
+
+echo 
+        '</div>
+    </div>
 </section>';
 
 ?>

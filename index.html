@@ -75,8 +75,8 @@
         <div class="formItem">
             <label for="ultBal">Data do Último Balanco Processado</label><br>
             <select onchange="showInf()" onblur='checkEmpty(this)' name="ultBal" id="ultBal">
-            <option selected value="2022-03-31">31/03/2022</option>
-            <option value="2022-06-31">31/06/2022</option>
+            <option value="2022-06-30">30/06/2022</option>
+            <option selected value="2022-09-30">30/09/2022</option>
             </select>
             <span class='spanCampEmpty'>*Campo vazio!</span>
         </div>
@@ -188,6 +188,18 @@
                 <h3>Preco/Valor Patrimonial da Acão</h3>
             </div>
             <div class="inf-body" id="inf-pvp"></div>
+        </div>
+        <div class="inf-item">
+            <div class="inf-tittle">
+                <h3>P/EBIT</h3>
+            </div>
+            <div class="inf-body" id="inf-p_ebit"></div>
+        </div>
+        <div class="inf-item">
+            <div class="inf-tittle">
+                <h3>P/ATIVOS</h3>
+            </div>
+            <div class="inf-body" id="inf-p_ativ"></div>
         </div>
         <div class="inf-item">
             <div class="inf-tittle">

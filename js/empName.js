@@ -9,7 +9,7 @@ const empName = {
     'USIM5': 'USIMINAS PNA N1',
     'WEGE3': 'WEG SA ON N1',
     'CYRE3': 'CYRELA BRAZIL REALTY PN',
-    'RENT3': 'OCALIZA RENT A CAR ON',
+    'RENT3': 'LOCALIZA RENT A CAR ON',
     'TRPL4': 'TRANSMISSÃO PAULISTA PN N1',
     'TKNO4': 'TEKNO PN',
     'BRML3': 'BR MALLS PARTICIPAÇÔES S/A ON',
@@ -24,7 +24,11 @@ const empName = {
     'MTSA4': 'METISA PN',
     'PATI4': 'PANATLANTICA PN',
     'ATOM3': 'ATOMPAR ON',
-    'SOND5': 'SONDOTECNICA S/A. PNA'
+    'SOND5': 'SONDOTECNICA S/A. PNA',
+    'EPAR3': 'EMBPAR S/A ON',
+    'TASA4': 'TAURUS ARMAS PN',
+    'GGBR4': 'GERDAU S.A. PN N1',
+    'ETER3': 'ETERNIT ON'
 };
 
 function wrtEmpName(){

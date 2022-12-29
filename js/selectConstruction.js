@@ -5,7 +5,7 @@ const $body = document.querySelector('body');
 const $opt = ["Serviços Financeiros Diversos","Diversos","Bancos","Construção Civil",
 "Energia Elétrica","Petróleo, Gás e Biocombustíveis","Tecidos, Vestuário e Calçados",
 "Máquinas e Equipamentos","Químicos","Siderurgia e Metalurgia",
-"Exploração de Imóveis","Madeira e Papel","Outros","Construção e Engenharia"];
+"Exploração de Imóveis","Madeira e Papel","Outros","Construção e Engenharia", "Comércio"];
 
 /* Reoder options in alphabetical */
 
@@ -26,20 +26,21 @@ $constCivil = ['CYRE3'];
 $eneElet = ['TRPL4','CLSC4'];
 $petGasBioc = ['ENAT3','PETR4'];
 $tecVestCalc = ['CTSA4'];
-$maqEq = ['MTSA4','KEPL3','WEGE3'];
+$maqEq = ['MTSA4','KEPL3','WEGE3', 'TASA4'];
 $quim = ['CRPG6','BRKM6'];
-$sidMet = ['CSNA3','TKNO4','PATI4','GOAU4','USIM5'];
+$sidMet = ['CSNA3','TKNO4','PATI4','GOAU4','USIM5', 'GGBR4'];
 $expPet = ['HBTS5','BRML3']
 $madPap = ['EUCA4'];
 $outros = ['ATOM3'];
-$consEng = ['SOND5'];
+$consEng = ['SOND5', 'ETER3'];
+$comerc = ['EPAR3'];
 
 /*!ATENCAO esses são todos os setores possiveis para empresas ja registradas.
 Caso seja nescessario cadastrar uma empresa que não tenha o setor nesse script, será nescessário criar um novo array.
 Para cada empresa que tiver o setor, basta acrescentar o codigo da empresa no array do setor correspondente! */
 
 $cod = [$servFinDir,$dir,$banc,$constCivil,$eneElet,$petGasBioc,$tecVestCalc,$maqEq,$quim,$sidMet,
-    $expPet,$madPap,$outros,$consEng]
+    $expPet,$madPap,$outros,$consEng, $comerc]
 
 const $selCod = document.querySelector('#cod');
 
@@ -132,6 +133,13 @@ var $selArr = []; //Array que vai conter as opcoes para o select
                 $selCod.innerHTML = $selArr;
             };
             break;
+            
+            case "Comércio":
+                for (i=0;i<$comerc.length;i++){
+                    $selArr[i] = "<option name ='"+$comerc[i]+"'>"+$comerc[i]+"</option>"
+                    $selCod.innerHTML = $selArr;
+                };
+                break;
         default:
             $selCod.innerHTML = '<option name="default">Selecione um Setor para ver os códigos disponíveis</option>'
         };

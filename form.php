@@ -190,6 +190,8 @@ echo
             if (!$sep) {
                 return floatval(preg_replace("/[^0-9]/", "", $num));
             }
+
+            //!Importante: verificar se ta retirando o sinal de menos "-"
         
             return floatval(
                 preg_replace("/[^0-9]/", "", substr($num, 0, $sep)) . '.' .
@@ -198,12 +200,15 @@ echo
         }
 
     ?>
-  
 <?php
 $username = "root";
 $servername = "localhost";
 $password = NULL;
 $dbname = "invest";
+
+// /html/body/div[1]/div[2]/table[1]/tbody/tr[1]/td[4]/span
+
+// usar o input de busca para selecionar as ações 
 
 /// Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);

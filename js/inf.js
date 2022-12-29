@@ -38,6 +38,18 @@ function showInf(){
         document.querySelector('#inf-pvp').innerHTML = 'P/VP: '+(nCotAt/(patLiq/nAc)).toFixed(2);
     };
 
+    // Mostrar o P/EBIT
+    let ebit = document.forms['up']['ebit12'].value;
+    if(ebit != '' && nCotAt != '' && nAc != ''){
+        document.querySelector('#inf-p_ebit').innerHTML = 'P/EBIT: '+(nCotAt/(ebit/nAc)).toFixed(2);
+    };
+
+    // Mostrar o P/ATIVOS
+    let ativ = document.forms['up']['ativ'].value;
+    if(ativ != '' && nCotAt != '' && nAc != ''){
+        document.querySelector('#inf-p_ativ').innerHTML = 'P/ATIVOS: '+(nCotAt/(ativ/nAc)).toFixed(2);
+    };
+
     if (lucLiqA != '' && nAc != ''){
         document.querySelector('#inf-lpa').innerHTML = 'LPA: '+(lucLiqA/nAc).toFixed(2);
     };
@@ -47,7 +59,6 @@ function showInf(){
     };
 
     // mostrar marg. ebit
-    let ebit = document.forms['up']['ebit12'].value;
     let recLiq = document.forms['up']['recL12'].value;
     if(ebit != '' && recLiq != ''){
         document.querySelector('#inf-marg-ebit').innerHTML = (((ebit/recLiq)*100).toFixed(1)+'%');

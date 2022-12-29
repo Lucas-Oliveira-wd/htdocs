@@ -1,0 +1,79 @@
+#sec_pie_chart{
+    margin: 100px auto;
+    width: 100%;
+    background-color: silver;
+}
+
+#sec_pie_chart .container{  
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+  
+  #my-pie-chart-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  
+  #legenda {
+    margin-left: 20px;
+    background-color: white;
+    padding: 5px;
+  }
+  
+  .entry {
+    width: 200px;
+    height: 300px;
+    position: relative;
+  }
+  
+  .entry-color {
+      height: 25px;
+      width: 25px;
+      position: absolute;
+      left: 0; top: 30%; bottom: 30%;
+  }
+  
+  .entry-text {
+    margin-left: 5px;
+    position: absolute;
+    left: 50px; top: 30%; bottom: 30%;
+  }
+  
+  #color-red {
+    background-color: red;
+  }
+  
+  #color-orange {
+    background-color: orange;
+  }
+  
+  #color-yellow {
+    background-color: yellow;
+  }
+  
+  #color-green {
+    background-color: green;
+  }
+  
+  #color-blue {
+    background-color: blue;
+  }
+  
+  #color-black {
+    background-color: black;
+  }
+  
+  #color-brown {
+    background-color: brown;
+  }
+
+  #color-aqua{
+    background-color: aqua;
+  }
+
+  #color-purple{
+    background-color: purple;
+  }
