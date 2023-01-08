@@ -181,9 +181,10 @@ $lynchN[$i] = round(($lynch[$i] - min($lynch))/(max($lynch) - min($lynch)), 3);
 $perResN[$i] = round(($perRes[$i] - min($perRes))/(max($perRes) - min($perRes)), 3);
 $divbLucN[$i] = round(($divbLuc[$i] - min($divbLuc))/(max($divbLuc) - min($divbLuc)), 3);
 $desv_pad_recN[$i] = round(($desv_pad_rec[$i] - min($desv_pad_rec))/(max($desv_pad_rec)-min($desv_pad_rec)));
+$desv_pad_recN[$i] = round(($desv_pad_rec[$i] - min($desv_pad_rec))/(max($desv_pad_rec)-min($desv_pad_rec)));
 }
 
-for($i=0;$i<count($cod);$i++){//mudando os valores com o bjetivo de minimizacão (quanto menor melhor)
+for($i=0;$i<count($cod);$i++){//mudando os valores com o ojetivo de minimizacão (quanto menor melhor)
 $plNMin[$i] = 1 - $plN[$i];
 $pvNMin[$i] = 1 - $plN[$i];
 $p_cxaNMin[$i] = 1 - $p_cxaN[$i];
@@ -201,6 +202,7 @@ for ($i=0;$i<count($cod);$i++){
         $bestc[$i] = $cod[$i]; $bestv[$i] =
         $roeN[$i] + $roicN[$i] + $marg_ebitN[$i] + $divYN[$i] + $lynchN[$i] + $perResN[$i] + $plNMin[$i] +
         $pvNMin[$i] + $p_cxaNMin[$i] + $divb_patlNMin[$i] + $p_ativcNMin[$i] + $p_ativNMin[$i] + $divb_cxNMin[$i] +
+        $divbLucNMin[$i] + $desv_pad_recNMin[$i];
         $divbLucNMin[$i] + $desv_pad_recNMin[$i];
 };
 

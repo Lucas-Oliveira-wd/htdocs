@@ -7,7 +7,7 @@ function showInf(){
         arr[i] = cotAt[i];  
         }
     };
-    let nCotAt = ''; //nova variavel com so com números
+    let nCotAt = ''; //nova variavel so com números
     for(i=0;i<arr.length;i++){
         if(arr[i] != undefined){  // retirando os undifineds
             nCotAt = nCotAt.concat('',arr[i]); 
@@ -67,5 +67,10 @@ function showInf(){
     //mostrar marg. Líquida
     if(lucLiqA != '' && recLiq != ''){
         document.querySelector('#inf-marg-liq').innerHTML = (((lucLiqA/recLiq)*100).toFixed(1)+'%');
+    };
+
+    //Mostrar P/Ebit
+    if(ebit != '' && cotAt != ''){
+        document.querySelector('#inf-p-ebit').innerHTML = (((nCotAt/(ebit/nAc))*100).toFixed(1)+'%');
     };
 };
