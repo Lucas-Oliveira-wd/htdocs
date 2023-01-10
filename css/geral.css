@@ -91,6 +91,7 @@ button:hover{
     background: linear-gradient(to top, #aaa, #eee);
     box-shadow: .12rem .25rem 8px #00000055;
     transform: scaleY(1.04) scaleX(1.005);
+    cursor: pointer;
 }
 span{
     display: none;
@@ -204,5 +205,8 @@ input[type="submit"]{
 }
 input[type="submit"]:hover{
     transform: scale(1.02);
+    cursor: pointer;
+}
+input[type="button"]:hover{
     cursor: pointer;
 }

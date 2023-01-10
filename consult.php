@@ -31,10 +31,6 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 };
 
-$sql = "SELECT codigo, cotAtual, roic, cresRec5a, divYield, nAcoes, divBruta, disponib, ativCirc, ativos,
-patLiq, recLiq12m, LucLiq12m, ebit12m, recLiq3m FROM acoesb3 WHERE ultBal = '2022-09-30'";
-$ub0322 = $conn->query($sql);
-
 echo //criando a página
 '<header>
     <div class="container" >
@@ -64,8 +60,46 @@ echo //criando a página
 <section id="sec-consult">
     <div class="container">';
 
+
+$sql = "SELECT DISTINCT ultBal FROM acoesb3";
+$ultBal = $conn->query($sql);
+
+$ultBalValues =  array();
+
+if ($ultBal->num_rows > 0) {
+    echo
+'<form action="" method="get">
+    <div class="form-item">
+        <select onchange="test()" name="ult_bal" id="ult_bal">';
+    // output data of each row
+    while($row = $ultBal->fetch_assoc()) {
+      array_push($ultBalValues, $row['ultBal']);// utimos balanços
+      ;
+      
+    }
+    
+    
+for($i=0;$i<count($ultBalValues);$i++){
+    echo 
+    '<option name = "'.$ultBalValues[$i].'">'.$ultBalValues[$i].'</option>';
+}
+
+echo '  </select>   
+    </div>
+</form>';
+  } else {
+    echo "Sem datas de Balanço para mostrar";
+  }
+
+$cot = array(); // Array para conter as cotações
+
 $pl = $pv = $cod = $roe = $roic = $p_cxa = $divb_patl = $p_ativc = $p_ativ = $divb_cx = $marg_ebit = $marg_liq
 = $cres_rec = $divY = $lynch = $perRes = $divbLuc = $desv_pad_rec = $mean = $variance =  array();
+
+
+$sql = "SELECT codigo, cotAtual, roic, cresRec5a, divYield, nAcoes, divBruta, disponib, ativCirc, ativos,
+patLiq, recLiq12m, LucLiq12m, ebit12m, recLiq3m FROM acoesb3 WHERE ultBal = '2022-09-30'";
+$ub0322 = $conn->query($sql);
 
 if ($ub0322->num_rows > 0) {
     echo
@@ -219,7 +253,7 @@ echo
 </section>';
 
 
-$acoesCart = array("ENAT3", "CTSA4", "CSNA3", "GPIV33", "TRPL4", "CRPG6", "BRSR6"); // array com as ações da carteira, !importante deixar a acão do banco por ultimo
+$acoesCart = array("ENAT3", "CTSA4", "CSNA3", "GPIV33", "TRPL4", "CRPG6", "PETR4", "BRSR6"); // array com as ações da carteira, !importante deixar a acão do banco por ultimo
 
 for ($i=0;$i<count($bestc);$i++){
     for($j=0;$j<count($acoesCart)-1;$j++){ // o -1 é para não incluir a acao do banco
@@ -228,25 +262,35 @@ for ($i=0;$i<count($bestc);$i++){
         }
     }
 };
+
 /*  transformando os pontos das acoes na carteira em porcentagem */
+$bankPerc = 100/count($acoesCart);// criando a porcentagem do banco
 for ($j=0;$j<count($acoesCart)-1;$j++){
-    $acoesCartValPerc[$j] = round($acoesCartVal[$j]*(87.5/array_sum($acoesCartVal)), 2);
+    $acoesCartValPerc[$j] = round($acoesCartVal[$j]*((100-$bankPerc)/array_sum($acoesCartVal)), 1); // ao considerar a porcentagem das acões do piechart, deve-se retirar a porcentagem do banco por se analisada de uma forma diferente
 };
-$acoesCartValPerc[count($acoesCart)-1] = 12.5;
+$acoesCartValPerc[count($acoesCart)-1] = round($bankPerc, 1); // incluindo a porcentagem do banco no piechart
 
 
 echo
 '<section id="sec_pie_chart">
     <div class="container">
         <h1>Objetivo das ações na carteira</h1>';
-/* criando os arrays para o pi chart com legenda */
+/* criando os arrays para o piechart com legenda */
 $colors = array("brown", "black", "blue", "green", "yellow", "orange", "red", "aqua", "purple"); //array das cores;
-$valPercAc = array(0.00, $acoesCartValPerc[0], $acoesCartValPerc[0]+$acoesCartValPerc[1], $acoesCartValPerc[0]+$acoesCartValPerc[1]+$acoesCartValPerc[2], $acoesCartValPerc[0]+$acoesCartValPerc[1]+$acoesCartValPerc[2]+$acoesCartValPerc[3], $acoesCartValPerc[0]+$acoesCartValPerc[1]+$acoesCartValPerc[2]+$acoesCartValPerc[3]+$acoesCartValPerc[4], $acoesCartValPerc[0]+$acoesCartValPerc[1]+$acoesCartValPerc[2]+$acoesCartValPerc[3]+$acoesCartValPerc[4]+$acoesCartValPerc[5], $acoesCartValPerc[0]+$acoesCartValPerc[1]+$acoesCartValPerc[2]+$acoesCartValPerc[3]+$acoesCartValPerc[4]+$acoesCartValPerc[5]+$acoesCartValPerc[6]);
-
+$valPercAc = array(0.00);
+$sum = array();
+for ($i=0;$i<count($acoesCartValPerc);$i++){
+    array_push($sum, $acoesCartValPerc[$i]);
+    array_push($valPercAc, array_sum($sum));
+};
 
 echo
 '<div id="my-pie-chart-container">
-<div id="my-pie-chart" style="background: conic-gradient(brown '.$valPercAc[0].'% '.$valPercAc[1].'% , black '.$valPercAc[1].'% '.$valPercAc[2].'%, blue '.$valPercAc[2].'% '.$valPercAc[3].'%, green '.$valPercAc[3].'% '.$valPercAc[4].'%, yellow '.$valPercAc[4].'% '.$valPercAc[5].'%, orange '.$valPercAc[5].'% '.$valPercAc[6].'%, red '.$valPercAc[6].'% '.$valPercAc[7]+12.5.'%); border-radius: 50%; width: 400px; height: 400px"></div>
+<div id="my-pie-chart" style="background: conic-gradient(';
+for ($i=0;$i<count($valPercAc)-2;$i++){
+    echo $colors[$i].' '.$valPercAc[$i].'% '.$valPercAc[$i+1].'% , ';
+};
+echo $colors[count($valPercAc)-2].' '.$valPercAc[count($valPercAc)-2].'% '.$valPercAc[count($valPercAc)-1].'%); border-radius: 50%; width: 400px; height: 400px"></div>
 
   <div id="legenda">';
 
@@ -265,6 +309,19 @@ echo
     </div>
 </section>';
 
+echo '<h1 style="text-align:center;">this part is to web-scrapping</h1>';
+
+$ptr4File = fopen("FUNDAMENTUS - PETR4 - Invista consciente - Indicadores Fundamentalistas.html", 'r') or die("Unable to open file!");
+/*      Outpu one line until end of file         */
+while(!feof($ptr4File)){
+    echo fgets($ptr4File)."<br>";
+}
+fclose($ptr4File);
 ?>
+    <script src = "js/show_rank.js">
+        function test(){
+    window.alert("funcionando!")
+}
+    </script>
 </body>
 </html>
