@@ -61,16 +61,16 @@ echo //criando a página
     <div class="container">';
 
 
-$sql = "SELECT DISTINCT ultBal FROM acoesb3";
+$sql = "SELECT DISTINCT ultBal FROM acoesb3 ORDER BY ultBal DESC";
 $ultBal = $conn->query($sql);
 
 $ultBalValues =  array();
 
 if ($ultBal->num_rows > 0) {
     echo
-'<form action="" method="get">
+'<form name="select_ult_cot" action="'.'<?php echo htmlspecialchars($_SERVER[PHP_SELF]) ?>'.'" method="post">
     <div class="form-item">
-        <select onchange="test()" name="ult_bal" id="ult_bal">';
+        <select onchange="showData()" name="ult_bal" id="ult_bal_sel">';
     // output data of each row
     while($row = $ultBal->fetch_assoc()) {
       array_push($ultBalValues, $row['ultBal']);// utimos balanços
@@ -78,10 +78,18 @@ if ($ultBal->num_rows > 0) {
       
     }
     
-    
+$showData = $_GET["select_ult_cot"]['ult_bal'];
+echo '$ShowData: '.$showData;
 for($i=0;$i<count($ultBalValues);$i++){
-    echo 
-    '<option name = "'.$ultBalValues[$i].'">'.$ultBalValues[$i].'</option>';
+    if ($i == 0){
+        echo
+        '<option selected name = "'.$ultBalValues[$i].'">'.$ultBalValues[$i].'</option>';
+    }
+    else{
+       echo 
+    '<option name = "'.$ultBalValues[$i].'">'.$ultBalValues[$i].'</option>'; 
+    }
+    
 }
 
 echo '  </select>   
@@ -98,7 +106,7 @@ $pl = $pv = $cod = $roe = $roic = $p_cxa = $divb_patl = $p_ativc = $p_ativ = $di
 
 
 $sql = "SELECT codigo, cotAtual, roic, cresRec5a, divYield, nAcoes, divBruta, disponib, ativCirc, ativos,
-patLiq, recLiq12m, LucLiq12m, ebit12m, recLiq3m FROM acoesb3 WHERE ultBal = '2022-09-30'";
+patLiq, recLiq12m, LucLiq12m, ebit12m, recLiq3m FROM acoesb3 WHERE ultBal = '".$showData."'";
 $ub0322 = $conn->query($sql);
 
 if ($ub0322->num_rows > 0) {
@@ -309,19 +317,7 @@ echo
     </div>
 </section>';
 
-echo '<h1 style="text-align:center;">this part is to web-scrapping</h1>';
-
-$ptr4File = fopen("FUNDAMENTUS - PETR4 - Invista consciente - Indicadores Fundamentalistas.html", 'r') or die("Unable to open file!");
-/*      Outpu one line until end of file         */
-while(!feof($ptr4File)){
-    echo fgets($ptr4File)."<br>";
-}
-fclose($ptr4File);
 ?>
-    <script src = "js/show_rank.js">
-        function test(){
-    window.alert("funcionando!")
-}
-    </script>
+<script src = "js/show_rank.js"></script>
 </body>
 </html>

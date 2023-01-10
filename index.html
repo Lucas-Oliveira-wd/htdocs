@@ -14,7 +14,7 @@
     <link type="text/css" rel="stylesheet" href="css/header.css"/>
     <link type="text/css" rel="stylesheet" href="css/form-inf.css"/>
 </head>
-<body onload="writeCod (document.querySelector('#setor')); showInf()">
+<body onload="writeCod (document.querySelector('#setor')); showInf();">
     <header>
         <div class="container">
             <nav>
@@ -42,7 +42,7 @@
 <section>
     <div class="container">
         <div class="button_home">
-            <input type="button" id='script' name="scriptbutton" value=" Run Script " onclick="goPython();">
+            <input type="button" id='script' name="scriptbutton" value=" Run Script " onclick="goPython()">
         </div>
     </div>
 </section>
@@ -57,7 +57,7 @@
 <script>
     function goPython(){
         $.ajax({
-          url: "py/up_data.py",
+          url: "../../../G:/Meu Drive/aprendizado/programacao/python/acoes_data/up_data.py",
          context: document.body
         }).done(function() {
          alert('finished python script');;

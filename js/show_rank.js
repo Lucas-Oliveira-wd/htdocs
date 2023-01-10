@@ -1,3 +1,5 @@
-function test(){
-    window.alert("funcionando!")
+const body = document.querySelector('body');
+const optValue = document.querySelector('#ult_bal_sel')
+function showData (){
+    alert(optValue.value)
 }
