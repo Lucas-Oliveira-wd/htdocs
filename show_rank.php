@@ -157,7 +157,7 @@ $sumDif1 = ($row['recLiq12m']/4 - $med)**2;
 $sumDif2 = ($row['recLiq3m'] - $med)**2;
 $dp = ($sumDif1 + $sumDif2)**(1/2);
 if($med!=0){
-    $dpperc = $dp/$med;
+    $dpperc = $dp/abs($med);
 } else {
 $dpperc = INF;
 }
