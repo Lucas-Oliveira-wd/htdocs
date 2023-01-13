@@ -3,7 +3,7 @@ const xhttp = new XMLHttpRequest();
 
 // Define a callback function
 xhttp.onload = function() {
-  document.querySelector('#table_fund table').innerHTML = this.responseText
+  document.querySelector('#table_fund table tbody').innerHTML = this.responseText
 }
 
 // Send a request

@@ -22,3 +22,14 @@ tr:nth-child(13), tr:nth-child(15), tr:nth-child(17), tr:nth-child(19), tr:nth-c
 tr:nth-child(23){
     background-color: #ddd;
 }
+
+#table_fund{
+    max-height: 500px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    position: relative;
+    margin-bottom: 100px;
+}
+#table_fund thead{
+    position: sticky;
+}

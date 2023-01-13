@@ -16,7 +16,7 @@
     <link type="text/css" rel="stylesheet" href="css/consult.css"/>
     <link type="text/css" rel="stylesheet" href="css/pie_chart.css"/>
 </head>
-<body>
+<body onload = "showData(document.querySelector('#ult_bal_sel').value)">
 <?php
 $username = "root";
 $servername = "localhost";
@@ -70,7 +70,7 @@ if ($ultBal->num_rows > 0) {
     echo
 '<form name="select_ult_cot" action="'.'<?php echo htmlspecialchars($_SERVER[PHP_SELF]) ?>'.'" method="get">
     <div class="form-item">
-        <select onchange="showData(); test()" name="ult_bal" id="ult_bal_sel">';
+        <select onchange="showData(this.value);" name="ult_bal" id="ult_bal_sel">';
     // output data of each row
     while($row = $ultBal->fetch_assoc()) {
       array_push($ultBalValues, $row['ultBal']);// utimos balanços
@@ -103,29 +103,33 @@ echo
     '<div class="table" id="table_fund">';
 
 echo
-        "<table>
-            <tr>
-                <th>Código</th>
-                <th>P/L</th>
-                <th>P/VPA</th>
-                <th>ROE</th>
-                <th>ROIC</th>
-                <th>Preco/Caixa</th>
-                <th>Dívida/Patrimônio</th>
-                <th>Preco/Ativo Circulante</th>
-                <th>Preco/Ativo</th>
-                <th>Dívida/Caixa</th>
-                <th>Márg. Ebit</th>
-                <th>Márg. Líquida</th>
-                <th>Crescimento da Receita (5a)</th>
-                <th>Dividendyield</th>
-                <th>Lynch</th>
-                <th>Período de Resistência</th>
-                <th>Divida/Lucro Mensal</th>
-                <th>Desv.Pad. das Receitas</th>
-            </tr>";
+"<table>
+<thead>
+    <tr>
+        <th>Código</th>
+        <th>P/L</th>
+        <th>P/VPA</th>
+        <th>ROE</th>
+        <th>ROIC</th>
+        <th>Preco/Caixa</th>
+        <th>Dívida/Patrimônio</th>
+        <th>Preco/Ativo Circulante</th>
+        <th>Preco/Ativo</th>
+        <th>Dívida/Caixa</th>
+        <th>Márg. Ebit</th>
+        <th>Márg. Líquida</th>
+        <th>Crescimento da Receita (5a)</th>
+        <th>Dividendyield</th>
+        <th>Lynch</th>
+        <th>Período de Resistência</th>
+        <th>Divida/Lucro Mensal</th>
+        <th>Desv.Pad. das Receitas</th>
+    </tr>
+</thead>
+<tbody>";
 echo
-        '</table>';
+'</tbody>
+</table>';
 
 echo
     '</div>';
