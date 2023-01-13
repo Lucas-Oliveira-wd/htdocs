@@ -51,7 +51,7 @@ $cot = array(); // Array para conter as cotações
 $divY = array(); // Array para o dividendyield
 
 foreach ($cod as $v){
-    $sql = "SELECT cotAtual, divYield FROM acoesb3cot WHERE ultBal = '".$v."' AND ultCot = MAX(ultCot)";
+    $sql = "SELECT cotAtual, divYield FROM acoesb3cot WHERE cod = '".$v."' ORDER BY ultCot DESC LIMIT 1";
     $uc = $conn->query($sql);
     if ($uc->num_rows > 0) {
         while($row = $uc->fetch_assoc()) {
@@ -64,110 +64,98 @@ foreach ($cod as $v){
     }
 }
 
+        /*  Arrays para conter os criterios     */
 
-    // output data of each row
-    while($row = $ub->fetch_assoc()) {
-        /*  Código   */
-array_push($cod,$row['codigo']);
-        /*  P/L  */
-if ($row['LucLiq12m']!=0&&$row['nAcoes']!=0){
-    array_push($pl, round(($row['cotAtual']/($row['LucLiq12m']/$row['nAcoes'])), 2));
-} else{
-    array_push($pl, INF);
-};
+$pl = $pv = $roe = $p_cxa = $divb_patl = $p_ativc = $p_ativ = $divb_cx = $marg_ebit = $marg_liq = $lynch = $perRes =
+ $divbLuc = $med = $sumDif1 = $sumDif2 = $dp = $desv_pad_rec = array();        
+
+ for ($i=0;$i<count($cod);$i++){
+                 /*  P/L  */
+if ($lucLiq12[$i]!=0&&$nAc[$i]!=0) {
+    $pl[$i] = round($cot[$i]/($lucLiq12[$i]/$nAc[$i]) , 2);
+ }  else {
+    $pl[$i] = INF;  
+ };    
         /* P/VPA     */
-if ($row['patLiq']!=0&&$row['nAcoes']!=0){
-    array_push($pv, round(($row['cotAtual']/($row['patLiq']/$row['nAcoes'])), 2));
+if ($patLiq[$i]!=0&&$nAc[$i]!=0){
+    $pv[$i] = round($cot[$i]/($patLiq[$i]/$nAc[$i]), 2);
 } else {
-    array_push($pv, INF);
+    $pv[$i] = INF;
 }
         /*  ROE    */
-if ($row['patLiq']!=0){
-    array_push($roe, round(($row['LucLiq12m']/$row['patLiq'])*100, 2));
-} else {
-    array_push($roe, INF);
-}
-        /**    ROIC   */
-array_push($roic, round($row['roic'], 2));
-        /*     Preco/Caixa por Acão      */
-if ($row['disponib']!=0&&$row['nAcoes']!=0){
-    array_push($p_cxa, round($row['cotAtual']/($row['disponib']/$row['nAcoes']), 2));
-} else {
-    array_push($p_cxa, INF);
-}
         /*   Dívida Bruta/Patrimônio Líquido   */
-if ($row['patLiq']!=0){
-    array_push($divb_patl, round($row['divBruta']/$row['patLiq'], 3));
+if ($patLiq[$i]!=0){
+    $roe[$i] = round(($lucLiq12[$i]/$patLiq[$i])*100, 2);
+    $divb_patl[$i] = round($divBruta[$i]/$patLiq[$i], 3);
 } else {
-    array_push($divb_patl, INF);
+    $roe[$i] = INF;
+    $divb_patl[$i] = INF;
+}
+        /*     Preco/Caixa por Acão      */
+if ($disp[$i]!=0&&$nAc[$i]!=0){
+    $p_cxa[$i] = round($cot[$i]/($disp[$i]/$nAc[$i]), 2);
+} else {
+    $p_cxa[$i] = INF;
 }
         /*   Preco/Ativos Circulantes por acao  */
-if($row['ativCirc']!=0&&$row['nAcoes']!=0){
-    array_push($p_ativc, round($row['cotAtual']/($row['ativCirc']/$row['nAcoes']), 3));
+if($ativC[$i]!=0&&$nAc[$i]!=0){
+    $p_ativc[$i] = round($cot[$i]/($ativC[$i]/$nAc[$i]), 3);
 } else {
-    array_push($p_ativc, INF);
+    $p_ativc[$i] = INF;
 }
         /*  Preco/Ativos por acao       */
-if ($row['ativos']!=0&&$row['nAcoes']!=0){
-    array_push($p_ativ, round($row['cotAtual']/($row['ativos']/$row['nAcoes']), 3));
+if ($ativ[$i]!=0&&$nAc[$i]!=0){
+    $p_ativ[$i] = round($cot[$i]/($ativ[$i]/$nAc[$i]), 3);
 } else {
-    array_push($p_ativ, INF);
+    $p_ativ[$i] = INF;
 }
         /*  Dívida Bruta/Caixa */
-if ($row['disponib']!=0){
-    array_push($divb_cx, round($row['divBruta']/$row['disponib'], 2));
+if ($disp[$i]!=0){
+    $divb_cx[$i] = round($divBruta[$i]/$disp[$i], 2);
 } else {
     array_push($divb_cx, INF);
 }
         /*  Margem Ebítida  */
         /*  Margem Líquida  */
-if ($row['recLiq12m']!=0){
-    array_push($marg_ebit, round(($row['ebit12m']/$row['recLiq12m'])*100, 2));
-    array_push($marg_liq, round(($row['LucLiq12m']/$row['recLiq12m'])*100, 2));
+if ($recLiq12[$i]!=0){
+    $marg_ebit[$i] = round(($ebit12[$i]/$recLiq12[$i])*100, 2);
+    $marg_liq[$i] = round(($lucLiq12[$i]/$recLiq12[$i])*100, 2);
 } else {
-    array_push($marg_ebit, INF);
-    array_push($marg_liq, INF);
+    $marg_ebit[$i] = INF;
+    $$marg_liq[$i] = INF;
 }
-
-        /*  Crescimento da Receita (5 anos) */
-array_push($cres_rec, round($row['cresRec5a'], 2));
-        /*  Dividen Yield       */
-array_push($divY, round($row['divYield'], 2));
         /*  Lynch               */
-if ($row['cotAtual']!=0&&$row['LucLiq12m']!=0&&$row['nAcoes']!=0){
-    array_push($lynch, round((($row['divYield']+($row['cresRec5a']/5))/($row['cotAtual']/($row['LucLiq12m']/$row['nAcoes']))), 2));
+if ($pl[$i]!=0){
+    $lynch[$i] = round((($divY[$i]+($cres_rec[$i]/5))/$pl[$i]), 2);
 }else {
-    array_push($lynch, INF);
+    $lynch[$i] = INF;
 }
         /*  Período de Resistência  */
-if ((($row['recLiq12m']-$row['LucLiq12m'])/12)!=0){
-    array_push($perRes, round(($row['disponib']/(($row['recLiq12m']-$row['LucLiq12m'])/12)), 2));
+if ($recLiq12[$i]-($lucLiq12[$i]/12)!=0){
+    $perRes[$i] = round($disp[$i]/($recLiq12[$i]-($lucLiq12[$i]/12)), 2);
 } else {
-    array_push($perRes, INF);
+    $perRes[$i] = INF;
 }
         /*  Dívida Bruta/Lucro Líquido Mensal   */
-if (($row['LucLiq12m']/12)!=0){
-    array_push($divbLuc, round(($row['divBruta']/($row['LucLiq12m']/12)), 2));
+if (($lucLiq12[$i]/12)!=0){
+    $divbLuc[$i] = round(($divBruta[$i]/($lucLiq12[$i]/12)), 2);
 } else {
-    array_push($divbLuc, INF);
+    $divbLuc[$i] = INF;
 }
 // calculando o desvio padrão
-$med = ($row['recLiq12m']/4+$row['recLiq3m'])/2;
-$sumDif1 = ($row['recLiq12m']/4 - $med)**2;
-$sumDif2 = ($row['recLiq3m'] - $med)**2;
-$dp = ($sumDif1 + $sumDif2)**(1/2);
-if($med!=0){
-    $dpperc = $dp/abs($med);
+$med[$i] = ($recLiq12[$i]/4+$recLiq3[$i])/2;
+$sumDif1[$i] = ($recLiq12[$i]/4 - $med[$i])**2;
+$sumDif2[$i] = ($recLiq3[$i] - $med[$i])**2;
+$dp[$i] = ($sumDif1[$i] + $sumDif2[$i])**(1/2);
+if($med[$i]!=0){
+    $desv_pad_rec[$i] = $dp[$i]/abs($med[$i]);
 } else {
-$dpperc = INF;
-}
-
-array_push($desv_pad_rec, round($dpperc, 3)); //Desvio Padrão Relativos das Receitas trimestrais e anuais
-;
+    $desv_pad_rec[$i] = INF;
+}//Desvio Padrão Relativos das Receitas trimestrais e anuais
 
 }
-    
-for($i=0;$i<count($pl);$i++){
+ 
+for($i=0;$i<count($pl);$i++){// mostrando os valores dos criterios na tabela
     echo 
     '<tr>
         <td>'.$cod[$i].'</td>
@@ -190,5 +178,5 @@ for($i=0;$i<count($pl);$i++){
         <td>'.$desv_pad_rec[$i].'</td>
         
     </tr>';
-}
+};
 
