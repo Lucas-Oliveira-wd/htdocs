@@ -55,7 +55,7 @@ if ($ub0322->num_rows > 0) {
 for($i=0;$i<count($pl);$i++){
     echo 
     '<tr>
-        <td>'.$cod[$i].'</td>
+        <td><a href="https://fundamentus.com.br/detalhes.php?papel='.$cod[$i].'">'.$cod[$i].'</a></td>
         <td>'.$pl[$i].'</td>
         <td>'.$pv[$i].'</td>
         <td>'.$roe[$i].'</td>

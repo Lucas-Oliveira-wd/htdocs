@@ -148,7 +148,7 @@ $sumDif1[$i] = ($recLiq12[$i]/4 - $med[$i])**2;
 $sumDif2[$i] = ($recLiq3[$i] - $med[$i])**2;
 $dp[$i] = ($sumDif1[$i] + $sumDif2[$i])**(1/2);
 if($med[$i]!=0){
-    $desv_pad_rec[$i] = $dp[$i]/abs($med[$i]);
+    $desv_pad_rec[$i] = round($dp[$i]/abs($med[$i]),3);
 } else {
     $desv_pad_rec[$i] = INF;
 }//Desvio Padrão Relativos das Receitas trimestrais e anuais
@@ -158,7 +158,7 @@ if($med[$i]!=0){
 for($i=0;$i<count($pl);$i++){// mostrando os valores dos criterios na tabela
     echo 
     '<tr>
-        <td>'.$cod[$i].'</td>
+        <td><a href="https://fundamentus.com.br/detalhes.php?papel='.$cod[$i].'" target="_blank">'.$cod[$i].'</a></td>
         <td>'.$pl[$i].'</td>
         <td>'.$pv[$i].'</td>
         <td>'.$roe[$i].'</td>
