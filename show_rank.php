@@ -122,7 +122,7 @@ if ($recLiq12[$i]!=0){
     $marg_liq[$i] = round(($lucLiq12[$i]/$recLiq12[$i])*100, 2);
 } else {
     $marg_ebit[$i] = INF;
-    $$marg_liq[$i] = INF;
+    $marg_liq[$i] = INF;
 }
         /*  Lynch               */
 if ($pl[$i]!=0){
