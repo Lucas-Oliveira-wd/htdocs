@@ -132,7 +132,7 @@ if ($pl[$i]!=0){
 }
         /*  Período de Resistência  */
 if ($recLiq12[$i]-($lucLiq12[$i]/12)!=0){
-    $perRes[$i] = round($disp[$i]/($recLiq12[$i]-($lucLiq12[$i]/12)), 2);
+    $perRes[$i] = round($disp[$i]/(($recLiq12[$i]/12)-($lucLiq12[$i]/12)), 2);
 } else {
     $perRes[$i] = INF;
 }
